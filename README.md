@@ -7,9 +7,9 @@
 ## Sequencia para criar o projeto
 
 Criar o projeto com o Laravel
-'''
+```
 composer create-project laravel/laravel .
-'''
+```
 
 Inciar o projeto criado com Laravel
 '''
