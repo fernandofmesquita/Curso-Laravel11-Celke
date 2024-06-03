@@ -108,3 +108,11 @@ Utilize a Pasta com o Nome da Tabela do DB e crie todas as Views referente a ess
 ```
 php artisan make:view courses/index
 ```
+
+## Criar uma Model
+
+Utilize o nome da model sempre do singular a tabela do banco de dados e utilize o seguinte comando para criar a model
+
+```
+php artisan make:model Course
+```
