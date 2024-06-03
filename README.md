@@ -44,6 +44,7 @@ Gerar a chave
 php artisan key:generate
 ```
 
+Criar tabelas no Banco de Dados
 ```
 php artisan migrate
 ```
@@ -86,4 +87,24 @@ Executar o Migration
 
 ```
 php artisan migrate
+```
+
+## Criar Controller
+```
+php artisan make:controller <nome da controller>Controller
+```
+
+Utilizar o nome da controller no singular. Nome da tabela no plural e nome da controller no singular.
+```
+php artisan make:controller CourseController
+```
+
+## Criar uma View
+```
+php artisan make:view <nome da pasta>/<nome da view>
+```
+
+Utilize a Pasta com o Nome da Tabela do DB e crie todas as Views referente a essa tabela na mesma pasta. EX index, create, edit e show.
+```
+php artisan make:view courses/index
 ```
