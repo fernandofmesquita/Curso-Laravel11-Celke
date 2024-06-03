@@ -9,9 +9,17 @@ class CourseController extends Controller
 {
     // Listar os cursos
     public function index(){
+
+        //Receber dado do DB
+
+        // $courses = Course::where('id', 1000)->get();
         
+        // $courses = Course::paginate(1);
+        
+        $courses = Course::orderBy('id', 'DESC')->get();
+
         // Carregar a View
-        return view('courses.index');
+        return view('courses.index', ['courses' => $courses]);
     }
 
     // Visualizar o curso
