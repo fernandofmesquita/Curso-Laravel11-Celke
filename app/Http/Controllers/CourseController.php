@@ -23,10 +23,12 @@ class CourseController extends Controller
     }
 
     // Visualizar o curso
-    public function show(){
+    public function show(Request $request){
         
+        $course = Course::where('id', $request->course)->first();
+
         // Carregar a View
-        return view('courses.show');
+        return view('courses.show', ['course' => $course]);
     }
 
     // Formulario para cadastrar o curso
@@ -44,20 +46,28 @@ class CourseController extends Controller
             'name' => $request->name
         ]);
         
-        return redirect()->route('courses.create')->with('success', 'Curso cadastrado com sucesso');
+        return redirect()->route('courses.index')
+        ->with('success', 'Curso cadastrado com sucesso');
     }
 
      // Formulario para editar o curso
-     public function edit(){
+     public function edit(Request $request){
         
+        $course = Course::where('id', $request->course)->first();
+
         // Carregar a View
-        return view('courses.edit');
+        return view('courses.edit', ['course' => $course]);
     }
 
      // Editar o Curso no Banco de Dados
-     public function update(){
+     public function update(Request $request, string $course){
         
-        dd('Editar');
+        
+        $update = Course::find($course);
+        $update->update($request->all());
+
+        return redirect()->route('courses.index')
+        ->with('success', 'Curso Editado com sucesso');    
     }
 
     
