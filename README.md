@@ -44,6 +44,10 @@ Gerar a chave
 php artisan key:generate
 ```
 
+```
+php artisan migrate
+```
+
 Inciar o Projeto criado com Laravel
 ```
 php artisan serve
@@ -64,4 +68,22 @@ git branch
 Baixar as Atualizações
 ```
 git pull
+```
+
+## Criar Migrations
+
+```
+php artisan make:migration create_<nome da tabela>_table
+```
+
+É aconcelhavel utilizar o nome da tabela em inglês e no plural pois o laravel utiliza a regra de pluralidade em suas regras
+
+```
+php artisan make:migration create_courses_table
+```
+
+Executar o Migration
+
+```
+php artisan migrate
 ```
