@@ -23,9 +23,11 @@ class CourseController extends Controller
     }
 
     // Visualizar o curso
-    public function show(Request $request){
+    public function show(Course $course){
         
-        $course = Course::where('id', $request->course)->first();
+        // Como foi respeita todas as regras de nomenclatura do laravel, não foi
+        // preciso utilizar o request para filtrar, foi utilizado somente a model
+        // $course = Course::where('id', $request->course)->first();
 
         // Carregar a View
         return view('courses.show', ['course' => $course]);
@@ -51,21 +53,26 @@ class CourseController extends Controller
     }
 
      // Formulario para editar o curso
-     public function edit(Request $request){
+     public function edit(Course $course){
         
-        $course = Course::where('id', $request->course)->first();
+        // dd($course);
 
         // Carregar a View
         return view('courses.edit', ['course' => $course]);
     }
 
      // Editar o Curso no Banco de Dados
-     public function update(Request $request, string $course){
+     public function update(Request $request, Course $course){
         
-        
-        $update = Course::find($course);
-        $update->update($request->all());
+        // dd($course); 
+        // dd($request); 
 
+        // Editar no Banco de Dados
+        $course->update([
+            'name' => $request->name
+        ]);
+
+        // Carregar a View
         return redirect()->route('courses.index')
         ->with('success', 'Curso Editado com sucesso');    
     }
