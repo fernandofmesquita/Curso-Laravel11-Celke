@@ -49,6 +49,11 @@ Criar tabelas no Banco de Dados
 php artisan migrate
 ```
 
+Executar as Seed
+```
+php artisan db:seed 
+```
+
 Inciar o Projeto criado com Laravel
 ```
 php artisan serve
@@ -111,8 +116,21 @@ php artisan make:view courses/index
 
 ## Criar uma Model
 
-Utilize o nome da model sempre do singular a tabela do banco de dados e utilize o seguinte comando para criar a model
+Utilize o nome da model sempre do singular referente a tabela do banco de dados e utilize o seguinte comando para criar a model
 
 ```
 php artisan make:model Course
+```
+
+## Criar uma Seed
+
+Utilize o nome da seed sempre do singular referente a tabela do banco de dados, juntamente com a palavra Seeder e utilize o seguinte comando para criar a seed
+
+```
+php artisan make:seeder CourseSeeder
+```
+
+Executar as Seed
+```
+php artisan db:seed 
 ```

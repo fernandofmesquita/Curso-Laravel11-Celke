@@ -10,6 +10,7 @@
     </head>
     <body>
         <h1>Bem-vindo ao Laravel 11</h1>
+        <a href="{{ route('courses.index') }}">Visualizar os Cursos</a><br><br>
 
         {{-- <p> Data atual: {{ \Carbon\Carbon::now()->format('d/m/Y h:i:s') }}</p> --}}
     </body>
