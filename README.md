@@ -88,10 +88,20 @@ php artisan make:migration create_<nome da tabela>_table
 php artisan make:migration create_courses_table
 ```
 
+Adicionar uma colulas em um tabela
+```
+php artisan make:migration alter_courses_add_price_table
+```
+
 Executar o Migration
 
 ```
 php artisan migrate
+```
+
+Executar o Rollback, para desfazer o ultimo migrate
+```
+php artisan migrate:rollback
 ```
 
 ## Criar Controller

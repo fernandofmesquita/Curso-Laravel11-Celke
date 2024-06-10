@@ -45,7 +45,8 @@ class CourseController extends Controller
         
         // Salvar as informações do form no DB
         Course::create([
-            'name' => $request->name
+            'name' => $request->name,
+            'price' => $request->price,
         ]);
         
         return redirect()->route('courses.index')
@@ -69,7 +70,8 @@ class CourseController extends Controller
 
         // Editar no Banco de Dados
         $course->update([
-            'name' => $request->name
+            'name' => $request->name,
+            'price' => $request->price,
         ]);
 
         // Carregar a View
