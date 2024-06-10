@@ -4,7 +4,7 @@
 
     <h2>Cadastrar o Curso</h2>
 
-    <a href="{{ route('courses.index') }}">Visualizar Cursos</a><br><br>
+    <a href="{{ route('courses.index') }}"><button type="button">Listar</button></a><br><br>
 
     {{-- Mensagem de Sucesso ao cadastrar no DB --}}
     @if (session('success'))
