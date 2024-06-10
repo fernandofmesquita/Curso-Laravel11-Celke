@@ -151,3 +151,13 @@ Criar um request para validar os dados preenchidos no formulário
 ```
 php artisan make:request CourseRequest
 ```
+
+## Criar componente 
+
+Criar componente com as mensagens de alerta
+```
+php artisan make:component <nome> --view
+```
+```
+php artisan make:component alert --view
+```

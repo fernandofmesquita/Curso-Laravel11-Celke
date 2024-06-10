@@ -23,7 +23,7 @@ class CourseRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'price' => 'required|numeric|max:10',
+            'price' => 'required|numeric|max:9999999999',
         ];
     }
 

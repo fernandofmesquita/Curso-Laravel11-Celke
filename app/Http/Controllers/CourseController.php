@@ -45,7 +45,7 @@ class CourseController extends Controller
     public function store(CourseRequest $request){
         
         //validar os dados do request
-        $request->validate();
+        $request->validated();
         // Salvar as informações do form no DB
         Course::create([
             'name' => $request->name,
@@ -72,7 +72,7 @@ class CourseController extends Controller
         // dd($request); 
 
         //validar os dados do request
-        $request->validate();
+        $request->validated();
 
         // Editar no Banco de Dados
         $course->update([

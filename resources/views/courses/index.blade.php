@@ -5,14 +5,11 @@
 
     <a href="{{ route('courses.create') }}"><button  type="button">Cadastrar</button></a><br><br><hr><br>
     
-    {{-- Mensagem de Sucesso ao cadastrar no DB --}}
-    @if (session('success'))
-        <p style="color: green">
-            {{ session('success') }}
-        </p>
-    @endif
 
+    {{-- Componente de mensagens de alerta --}}
+    <x-alert />
 
+    
     {{-- Listar os registros --}}
     @forelse ($courses as $course)
         <b>ID:</b> {{ $course->id }}<br>

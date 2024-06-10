@@ -6,21 +6,9 @@
 
     <a href="{{ route('courses.index') }}"><button type="button">Listar</button></a><br><br>
 
-    {{-- Mensagem de Sucesso ao cadastrar no DB --}}
-    @if (session('success'))
-        <p style="color: green">
-            {{ session('success') }}
-        </p>
-    @endif
+    {{-- Componente de mensagens de alerta --}}
+    <x-alert />
 
-      {{-- Validação de Campos --}}
-    @if ($errors->any())
-        <span style="color: red">
-            @foreach ($errors->all() as $error)
-                {{ $error }} <br>
-            @endforeach
-        </span>
-    @endif
 
     {{-- Formulario de cadastro de curso  --}}
     <form action="{{ route('courses.update', ['course' => $course->id])}}" method="POST" >
