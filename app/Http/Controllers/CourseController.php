@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CourseRequest;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
@@ -41,8 +42,10 @@ class CourseController extends Controller
     }
 
     // Cadastrar o Curso no Banco de Dados
-    public function store(Request $request){
+    public function store(CourseRequest $request){
         
+        //validar os dados do request
+        $request->validate();
         // Salvar as informações do form no DB
         Course::create([
             'name' => $request->name,
@@ -63,10 +66,13 @@ class CourseController extends Controller
     }
 
      // Editar o Curso no Banco de Dados
-     public function update(Request $request, Course $course){
+     public function update(CourseRequest $request, Course $course){
         
         // dd($course); 
         // dd($request); 
+
+        //validar os dados do request
+        $request->validate();
 
         // Editar no Banco de Dados
         $course->update([

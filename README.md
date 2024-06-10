@@ -144,3 +144,10 @@ Executar as Seed
 ```
 php artisan db:seed 
 ```
+
+## Criar validação do Formulário
+
+Criar um request para validar os dados preenchidos no formulário
+```
+php artisan make:request CourseRequest
+```

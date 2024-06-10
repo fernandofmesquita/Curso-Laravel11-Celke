@@ -13,16 +13,25 @@
         </p>
     @endif
 
+      {{-- Validação de Campos --}}
+    @if ($errors->any())
+        <span style="color: red">
+            @foreach ($errors->all() as $error)
+                {{ $error }} <br>
+            @endforeach
+        </span>
+    @endif
+
     {{-- Formulario de cadastro de curso  --}}
     <form action="{{ route('courses.update', ['course' => $course->id])}}" method="POST" >
         @csrf
         @method('PUT')
 
         <label for="name">Nome: </label>
-        <input type="text" name="name" id="name" placeholder="Digite o nome do curso" value="{{ old('name', $course->name) }}" required>
+        <input type="text" name="name" id="name" placeholder="Digite o nome do curso" value="{{ old('name', $course->name) }}">
         <br><br>
         <label for="price">Preço: </label>
-        <input type="text" name="price" id="price" placeholder="Digite o preço do curso" value="{{ old('price', $course->price) }}" required>
+        <input type="text" name="price" id="price" placeholder="Digite o preço do curso" value="{{ old('price', $course->price) }}">
         <br><br>
 
         <button type="submit">Editar</button>

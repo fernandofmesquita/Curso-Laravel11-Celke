@@ -3,7 +3,7 @@
 @section('content')
     <h2>Listar os Cursos</h2>
 
-    <a href="{{ route('courses.create') }}"><button  type="button">Cadastrar</button></a><br><br>
+    <a href="{{ route('courses.create') }}"><button  type="button">Cadastrar</button></a><br><br><hr><br>
     
     {{-- Mensagem de Sucesso ao cadastrar no DB --}}
     @if (session('success'))
