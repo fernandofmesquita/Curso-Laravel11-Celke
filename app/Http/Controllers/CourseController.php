@@ -17,7 +17,7 @@ class CourseController extends Controller
         
         // $courses = Course::paginate(1);
         
-        $courses = Course::orderBy('id', 'DESC')->get();
+        $courses = Course::orderBy('id', 'ASC')->get();
 
         // Carregar a View
         return view('courses.index', ['courses' => $courses]);

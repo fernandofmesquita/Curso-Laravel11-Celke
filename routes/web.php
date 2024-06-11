@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,3 +17,6 @@ Route::get('/edit-course/{course}', [CourseController::class, 'edit'])->name('co
 Route::put('/update-course/{course}', [CourseController::class, 'update'])->name('courses.update');
 Route::delete('/destroy-course/{course}', [CourseController::class, 'destroy'])->name('courses.destroy');
 
+// Aulas
+
+Route::get('/index-classe/{course}', [ClasseController::class, 'index'])->name('classes.index');

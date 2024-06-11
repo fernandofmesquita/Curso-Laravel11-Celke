@@ -17,6 +17,7 @@ class ClasseSeeder extends Seeder
             Classe::create([
                 'name' => 'Aula 1',
                 'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi dignissimos ut sapiente error doloribus! Dolorem provident dolores consequatur neque consequuntur. Deserunt illo minima ipsam vitae assumenda ducimus debitis quasi sapiente?',
+                'order_classe' => 1,
                 'course_id' => 1,
             ]);
         }
@@ -25,6 +26,7 @@ class ClasseSeeder extends Seeder
             Classe::create([
                 'name' => 'Aula 2',
                 'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi dignissimos ut sapiente error doloribus! Dolorem provident dolores consequatur neque consequuntur. Deserunt illo minima ipsam vitae assumenda ducimus debitis quasi sapiente?',
+                'order_classe' => 2,
                 'course_id' => 1,
             ]);
         }
@@ -33,6 +35,7 @@ class ClasseSeeder extends Seeder
             Classe::create([
                 'name' => 'Aula 3',
                 'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi dignissimos ut sapiente error doloribus! Dolorem provident dolores consequatur neque consequuntur. Deserunt illo minima ipsam vitae assumenda ducimus debitis quasi sapiente?',
+                'order_classe' => 3,
                 'course_id' => 1,
             ]);
         }
@@ -41,6 +44,7 @@ class ClasseSeeder extends Seeder
             Classe::create([
                 'name' => 'Aula 1B',
                 'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi dignissimos ut sapiente error doloribus! Dolorem provident dolores consequatur neque consequuntur. Deserunt illo minima ipsam vitae assumenda ducimus debitis quasi sapiente?',
+                'order_classe' => 1,
                 'course_id' => 2,
             ]);
         }
@@ -49,6 +53,7 @@ class ClasseSeeder extends Seeder
             Classe::create([
                 'name' => 'Aula 2B',
                 'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi dignissimos ut sapiente error doloribus! Dolorem provident dolores consequatur neque consequuntur. Deserunt illo minima ipsam vitae assumenda ducimus debitis quasi sapiente?',
+                'order_classe' => 2,
                 'course_id' => 2,
             ]);
         }
