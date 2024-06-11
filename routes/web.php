@@ -20,3 +20,6 @@ Route::delete('/destroy-course/{course}', [CourseController::class, 'destroy'])-
 // Aulas
 
 Route::get('/index-classe/{course}', [ClasseController::class, 'index'])->name('classes.index');
+Route::get('/show-classe', [ClasseController::class, 'show'])->name('classes.show');
+Route::get('/create-classe/{course}', [ClasseController::class, 'create'])->name('classes.create');
+Route::post('/store-classe', [ClasseController::class, 'store'])->name('classes.store');
