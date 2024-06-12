@@ -17,7 +17,7 @@
         <b>Preço:</b> {{ 'R$ '. number_format($course->price, 2, ',', '.') }}<br>
         <b>Data de Cadastro:</b> {{ \Carbon\Carbon::parse($course->created_at)->format('d/m/Y H:i:s') }}<br>
         <b>Data de Edição:</b> {{ \Carbon\Carbon::parse($course->updated_at)->tz('America/Fortaleza')->format('d/m/Y H:i:s') }}<br><br>
-        <a href="{{ route('classes.index', ['course' => $course->id]) }}"><button type="button">Cursos</button></a><br>
+        <a href="{{ route('classes.index', ['course' => $course->id]) }}"><button type="button">Aulas</button></a><br>
         <a href="{{ route('courses.show', ['course' => $course->id]) }}"><button type="button">Visualizar</button></a><br>
         <a href="{{ route('courses.edit', ['course' => $course->id]) }}"><button type="button">Editar</button></a>
 

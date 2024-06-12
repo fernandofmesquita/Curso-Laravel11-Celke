@@ -15,10 +15,10 @@
         @method('POST')
 
         <label for="name">Nome: </label>
-        <input type="text" name="name" id="name" placeholder="Digite o nome do curso" value="{{ old('name') }}">
+        <input type="text" name="name" id="name" placeholder="Digite o nome do curso" value="{{ old('name') }}" required>
         <br><br>
         <label for="price">Preço: </label>
-        <input type="text" name="price" id="price" placeholder="Digite o preço do curso" value="{{ old('price') }}">
+        <input type="text" name="price" id="price" placeholder="Digite o preço do curso" value="{{ old('price') }}" required>
         <br><br>
 
         <button type="submit">Cadastrar</button>

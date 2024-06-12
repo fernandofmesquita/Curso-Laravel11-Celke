@@ -3,8 +3,8 @@
 @section('content')
     <h2>Listar as Aulas</h2>
 
-    <a href="{{ route('courses.index') }}"><button  type="button">Listar Cursos</button></a><br><br>
-    <a href="{{ route('classes.create', ['course' => $course->id]) }}"><button  type="button">Cadastrar Cursos</button></a><br><br><hr><br>
+    <a href="{{ route('courses.index') }}"><button  type="button">Listar Cursos</button></a> 
+    <a href="{{ route('classes.create', ['course' => $course->id]) }}"><button  type="button">Cadastrar Aula</button></a><br><br><hr><br>
     
 
     {{-- Componente de mensagens de alerta --}}
