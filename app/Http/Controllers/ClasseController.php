@@ -48,6 +48,25 @@ class ClasseController extends Controller
         ]);
 
         // Carrega a view Index do curso especificado
-        return redirect()->route('classes.index', ['course' => $request->course_id]);
+        return redirect()->route('classes.index', ['course' => $request->course_id])
+            ->with('success', 'Aula Cadastrada com sucesso');
+    }
+
+    public function edit(Classe $classe)
+    {
+        return view('classes.edit', ['classe' => $classe]);
+    }
+
+    public function update(ClasseRequest $request, Classe $classe)
+    {
+        $request->validated();
+
+        $classe->update([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('classes.index', ['course' => $classe->course_id])
+            ->with('success', 'Aula Editada com sucesso');
     }
 }

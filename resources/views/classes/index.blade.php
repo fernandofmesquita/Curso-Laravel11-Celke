@@ -19,6 +19,7 @@
         <b>Curso: </b> {{ $classe->course->name }} <br>
         <b>Data de Cadastro:</b> {{ \Carbon\Carbon::parse($classe->created_at)->format('d/m/Y H:i:s') }}<br>
         <b>Data de Edição:</b> {{ \Carbon\Carbon::parse($classe->updated_at)->tz('America/Fortaleza')->format('d/m/Y H:i:s') }}<br><br>
+        <a href="{{ route('classes.edit', ['classe' => $classe->id]) }}"><button type="button">Editar</button></a> <br> <br>
         <hr><br>
     @empty
     <p style="color: red">Não existe Aulas cadastradas</p>

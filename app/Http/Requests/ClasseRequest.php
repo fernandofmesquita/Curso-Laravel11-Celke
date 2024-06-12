@@ -22,7 +22,7 @@ class ClasseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'course_id' => 'required',
+            'course_id' => 'required_if:course_id,!=,null',
             'name' => 'required',
             'description' => 'required',
         ];
