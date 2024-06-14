@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CourseRequest;
 use App\Models\Course;
+use Exception;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -89,12 +90,21 @@ class CourseController extends Controller
      // Excluir o Curso no Banco de Dados
      public function destroy(Course $course){
         
-        // Excluir o registro
-        $course->delete();
+        try {
+            // Excluir o registro
+            $course->delete();
 
-        // Carregar a View
+            // Carregar a View
 
-        return redirect()->route('courses.index')
-        ->with('success', 'Curso excluido com Sucesso');
+            return redirect()->route('courses.index')
+            ->with('success', 'Curso excluido com Sucesso');
+
+        } catch (Exception $e) {
+            
+            $errorCod = $e->getCode();
+            return redirect()->route('courses.index')
+            ->with('error', "Curso: $course->name não pode ser excluido. (Erro: $errorCod)");
+
+        }
     }
 }

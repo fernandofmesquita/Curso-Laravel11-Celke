@@ -7,7 +7,7 @@
 
 {{-- Mensagem de Erro ao cadastrar no DB --}}
 @if (session('error'))
-    <p style="color: red)">
+    <p style="color: red">
         {{ session('error') }}
     </p>
 @endif
