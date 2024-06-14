@@ -1,17 +1,21 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.admin')
 
-        <title>Curso Laravel</title>
+@section('content')
 
-        
-    </head>
-    <body>
-        <h1>Bem-vindo ao Laravel 11</h1>
-        <a href="{{ route('courses.index') }}">Visualizar os Cursos</a><br><br>
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Dashboard</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Bem-vindo ao Laravel 11</li>
+    </ol>
+    <div class="row">
+        <a href="{{ route('courses.index') }}"><button class="btn btn-primary" type="button">Visualizar os Cursos</button></a>
+                
+
+        {{-- Componente de mensagens de alerta --}}
+        <x-alert />
 
         {{-- <p> Data atual: {{ \Carbon\Carbon::now()->format('d/m/Y h:i:s') }}</p> --}}
-    </body>
-</html>
+    </div>
+</div>
+      
+@endsection
