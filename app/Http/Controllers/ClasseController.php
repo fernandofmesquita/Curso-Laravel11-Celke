@@ -8,6 +8,7 @@ use App\Models\Course;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ClasseController extends Controller
 {
@@ -59,6 +60,9 @@ class ClasseController extends Controller
 
             // Confirma a transação no Banco de Dados
             DB::commit();
+            
+            // Registrar no Log
+            Log::info('Aula Cadastrada', ['classe_id' => $classe->id, 'course_id'=> $classe->course_id ]);
 
             // Carrega a view show da aula especificada
             return redirect()->route('classes.show', ['classe' => $classe->id])
@@ -68,6 +72,9 @@ class ClasseController extends Controller
         {
             //Desfaz a transação no Banco de Dados
             DB::rollBack();
+
+            // Registrar no Log
+            Log::notice('Aula não Cadastrada', ['error' => $e->getMessage() ]);
 
             return back()->withInput()->with('error', 'Não foi possível cadastrar a Aula');
 
@@ -103,6 +110,9 @@ class ClasseController extends Controller
             // Confirma a transação no Banco de Dados
             DB::commit();
 
+            // Registrar no Log
+            Log::info('Aula Editada', ['classe_id' => $classe->id, 'course_id'=> $classe->course_id ]);
+
             // Carrega a view show da aula especificada
             return redirect()->route('classes.show', ['classe' => $classe->id])
                 ->with('success', 'Aula Editada com sucesso');
@@ -112,6 +122,12 @@ class ClasseController extends Controller
         {
             //Desfaz a transação no Banco de Dados
             DB::rollBack();
+
+            // Registrar no Log
+            Log::notice('Aula não Cadastrada', [
+                'classe_id' => $classe->id, 
+                'course_id'=> $classe->course_id, 
+                'error' => $e->getMessage() ]);
 
             return back()->withInput()->with('error', 'Não foi possível cadastrar a Aula');
 
@@ -139,6 +155,9 @@ class ClasseController extends Controller
             // Confirma a transação no Banco de Dados
             DB::commit();
 
+            // Registrar no Log
+            Log::info('Aula Deletada', ['classe_id' => $classe->id, 'course_id'=> $classe->course_id ]);
+
             // Retorna para a lista de Aulas do Curso
             return redirect()->route('classes.index', ['course' => $classe->course_id])
             ->with('success', 'Aula Excluida com sucesso');
@@ -147,6 +166,12 @@ class ClasseController extends Controller
             
             // Desfaz a transação no Banco de Dados
             DB::rollBack();
+
+            // Registrar no Log
+            Log::notice('Aula não Deletada', [
+                'classe_id' => $classe->id, 
+                'course_id'=> $classe->course_id, 
+                'error' => $e->getMessage() ]);
 
             // Pega o codigo do erro
             $errorCod = $e->getCode();

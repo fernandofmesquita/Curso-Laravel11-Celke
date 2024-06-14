@@ -59,6 +59,46 @@ Inciar o Projeto criado com Laravel
 php artisan serve
 ```
 
+
+## Instalar o Laravel Auditing
+Instalar
+```
+composer require owen-it/laravel-auditing
+```
+
+Criar arquivo de Config
+```
+php artisan vendor:publish --provider "OwenIt\Auditing\AuditingServiceProvider" --tag="config"
+```
+
+Criar migration da Tabela audits
+```
+php artisan vendor:publish --provider "OwenIt\Auditing\AuditingServiceProvider" --tag="migrations"
+```
+
+Executar o Migrate
+```
+php artisan migrate
+```
+
+Utilize a seguinte configuração nas Models
+```
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
+
+class User extends Model implements Auditable
+{
+    use \OwenIt\Auditing\Auditable;
+
+    // ...
+}
+```
+
+
 ## Como usar o GitHub
 
 Baixar arquivos do Git

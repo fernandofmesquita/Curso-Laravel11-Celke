@@ -7,6 +7,7 @@ use App\Models\Course;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CourseController extends Controller
 {
@@ -54,13 +55,16 @@ class CourseController extends Controller
         // Tenta salvar no Banco de Dados
         try {
             // Salvar as informações do form no DB
-            Course::create([
+            $course = Course::create([
                 'name' => $request->name,
                 'price' => $request->price,
             ]);
             
             // Confirma a transação
             DB::commit();
+
+            // Registrar no Log
+            Log::info('Curso Cadastrado', ['course_id' => $course->id ]);
 
             return redirect()->route('courses.index')
             ->with('success', 'Curso cadastrado com sucesso');
@@ -69,6 +73,9 @@ class CourseController extends Controller
 
             // Desfaz a transação
             DB::rollBack();
+
+            // Registrar no Log
+            Log::notice('Curso não Cadastrado', ['error' => $e->getMessage()]);
 
             return back()->withInput()->with('error', 'Curso não foi cadastrado');
 
@@ -105,6 +112,9 @@ class CourseController extends Controller
             // Confirma a transação
             DB::commit();
 
+            // Registrar no Log
+            Log::info('Curso Editado', ['course_id' => $course->id ]);
+
             // Carregar a View
             return redirect()->route('courses.index')
             ->with('success', 'Curso Editado com sucesso');  
@@ -113,6 +123,9 @@ class CourseController extends Controller
 
             // Desfaz a transação
             DB::rollBack();
+
+            // Registrar no Log
+            Log::notice('Curso não Editado', ['course_id' => $course->id, 'error' => $e->getMessage()]);
 
             return back()->withInput()->with('error', 'Curso não foi Editado');
 
@@ -135,6 +148,9 @@ class CourseController extends Controller
             // Confirma a transação
             DB::commit();
 
+            // Registrar no Log
+            Log::info('Curso Deletado', ['course_id' => $course->id ]);
+
             // Carregar a View
             return redirect()->route('courses.index')
             ->with('success', 'Curso excluido com Sucesso');
@@ -143,6 +159,9 @@ class CourseController extends Controller
             
             // Desfaz a transação
             DB::rollBack();
+
+            // Registrar no Log
+            Log::notice('Curso não Deletado', ['course_id' => $course->id, 'error' => $e->getMessage()]);
             
             $errorCod = $e->getCode();
             return redirect()->route('courses.index')
