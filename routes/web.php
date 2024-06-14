@@ -20,8 +20,9 @@ Route::delete('/destroy-course/{course}', [CourseController::class, 'destroy'])-
 // Aulas
 
 Route::get('/index-classe/{course}', [ClasseController::class, 'index'])->name('classes.index');
-Route::get('/show-classe', [ClasseController::class, 'show'])->name('classes.show');
+Route::get('/show-classe/{classe}', [ClasseController::class, 'show'])->name('classes.show');
 Route::get('/create-classe/{course}', [ClasseController::class, 'create'])->name('classes.create');
 Route::post('/store-classe', [ClasseController::class, 'store'])->name('classes.store');
 Route::get('/edit-classe/{classe}', [ClasseController::class, 'edit'])->name('classes.edit');
-Route::put('update-classe/{classe}', [ClasseController::class, 'update'])->name('classes.update');
+Route::put('/update-classe/{classe}', [ClasseController::class, 'update'])->name('classes.update');
+Route::delete('/destroy-classe/{classe}', [ClasseController::class, 'destroy'])->name('classes.destroy');

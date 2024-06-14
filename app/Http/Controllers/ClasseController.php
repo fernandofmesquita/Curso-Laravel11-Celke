@@ -38,7 +38,7 @@ class ClasseController extends Controller
                 ->first();
 
         // Cadastra no banco de dados os dados do formulário
-        Classe::create([
+        $classe = Classe::create([
             'name' => $request->name,
             'description' => $request->description,
             // 'order_classe' => <condição> ? <se sim> : <se não>,
@@ -47,26 +47,47 @@ class ClasseController extends Controller
             'course_id' => $request->course_id
         ]);
 
-        // Carrega a view Index do curso especificado
-        return redirect()->route('classes.index', ['course' => $request->course_id])
+        // Carrega a view show da aula especificada
+        return redirect()->route('classes.show', ['classe' => $classe->id])
             ->with('success', 'Aula Cadastrada com sucesso');
     }
 
+    // Recupera os dados da aula e injeta na variavel $classe
     public function edit(Classe $classe)
     {
+        // Carrega a view e passa os dados da Aula
         return view('classes.edit', ['classe' => $classe]);
     }
 
+
+
+    // Recupera dos dados do formulário edit
     public function update(ClasseRequest $request, Classe $classe)
     {
         $request->validated();
 
+        // Edita no banco de dados os dados do formulário
         $classe->update([
             'name' => $request->name,
             'description' => $request->description,
         ]);
 
-        return redirect()->route('classes.index', ['course' => $classe->course_id])
+        // Carrega a view show da aula especificada
+        return redirect()->route('classes.show', ['classe' => $classe->id])
             ->with('success', 'Aula Editada com sucesso');
+    }
+
+    public function show(Classe $classe)
+    {
+        // dd($classe);
+        return view('classes.show', ['classe' => $classe]);
+    }
+
+    public function destroy(Classe $classe)
+    {
+        $classe->delete();
+
+        return redirect()->route('classes.index', ['course' => $classe->course_id])
+        ->with('success', 'Aula Excluida com sucesso');
     }
 }
