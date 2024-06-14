@@ -7,6 +7,7 @@ use App\Models\Classe;
 use App\Models\Course;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClasseController extends Controller
 {
@@ -32,25 +33,45 @@ class ClasseController extends Controller
     // Recupera dos dados do formulário create
     public function store(ClasseRequest $request)
     {
+        // Validação do Formulário
         $request->validated();
+
         // Procura a ultima aula cadastrada do curso
         $lastOrderClasse = Classe::where('course_id', $request->course_id)
                 ->orderBy('order_classe', 'DESC')
                 ->first();
 
-        // Cadastra no banco de dados os dados do formulário
-        $classe = Classe::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            // 'order_classe' => <condição> ? <se sim> : <se não>,
-            // [existe uma $lastOrderClasse] ? [se sim lastOrderClasse + 1] : [senão será 1]
-            'order_classe' => $lastOrderClasse ? $lastOrderClasse->order_classe + 1 : 1,
-            'course_id' => $request->course_id
-        ]);
+        // Inicia a transação do Banco de Dados
+        DB::beginTransaction();
 
-        // Carrega a view show da aula especificada
-        return redirect()->route('classes.show', ['classe' => $classe->id])
-            ->with('success', 'Aula Cadastrada com sucesso');
+        // Testa cadastrar no Banco de dados
+        try {
+
+            // Cadastra no banco de dados os dados do formulário
+            $classe = Classe::create([
+                'name' => $request->name,
+                'description' => $request->description,
+                // 'order_classe' => <condição> ? <se sim> : <se não>,
+                // [existe uma $lastOrderClasse] ? [se sim lastOrderClasse + 1] : [senão será 1]
+                'order_classe' => $lastOrderClasse ? $lastOrderClasse->order_classe + 1 : 1,
+                'course_id' => $request->course_id
+            ]);
+
+            // Confirma a transação no Banco de Dados
+            DB::commit();
+
+            // Carrega a view show da aula especificada
+            return redirect()->route('classes.show', ['classe' => $classe->id])
+                ->with('success', 'Aula Cadastrada com sucesso');
+        
+        } catch(Exception $e)
+        {
+            //Desfaz a transação no Banco de Dados
+            DB::rollBack();
+
+            return back()->withInput()->with('error', 'Não foi possível cadastrar a Aula');
+
+        }
     }
 
     // Recupera os dados da aula e injeta na variavel $classe
@@ -66,35 +87,71 @@ class ClasseController extends Controller
     public function update(ClasseRequest $request, Classe $classe)
     {
         $request->validated();
+        
+        // Inicia a transação do Banco de Dados
+        DB::beginTransaction();
 
-        // Edita no banco de dados os dados do formulário
-        $classe->update([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
+        // Testa cadastrar no Banco de dados
+        try {
 
-        // Carrega a view show da aula especificada
-        return redirect()->route('classes.show', ['classe' => $classe->id])
-            ->with('success', 'Aula Editada com sucesso');
+            // Edita no banco de dados os dados do formulário
+            $classe->update([
+                'name' => $request->name,
+                'description' => $request->description,
+            ]);
+
+            // Confirma a transação no Banco de Dados
+            DB::commit();
+
+            // Carrega a view show da aula especificada
+            return redirect()->route('classes.show', ['classe' => $classe->id])
+                ->with('success', 'Aula Editada com sucesso');
+
+                  
+        } catch(Exception $e)
+        {
+            //Desfaz a transação no Banco de Dados
+            DB::rollBack();
+
+            return back()->withInput()->with('error', 'Não foi possível cadastrar a Aula');
+
+        }
     }
 
+    // Recupera as Informações de Uma aula no Banco de Dados
     public function show(Classe $classe)
     {
-        // dd($classe);
+        // Retorna a View da Aula especificada
         return view('classes.show', ['classe' => $classe]);
     }
 
+
+    // Recupera as Informações de Uma aula no Banco de Dados
     public function destroy(Classe $classe)
     {
+        // Inicia uma Transação no banco de Dados
+        DB::beginTransaction();
+
+        // Tenta excluir a aula
         try {
             $classe->delete();
 
+            // Confirma a transação no Banco de Dados
+            DB::commit();
+
+            // Retorna para a lista de Aulas do Curso
             return redirect()->route('classes.index', ['course' => $classe->course_id])
             ->with('success', 'Aula Excluida com sucesso');
 
         } catch (Exception $e) {
             
+            // Desfaz a transação no Banco de Dados
+            DB::rollBack();
+
+            // Pega o codigo do erro
             $errorCod = $e->getCode();
+
+            // Retorna para a lista de Aulas do Curso
             return redirect()->route('classes.index', ['course' => $classe->course_id])
             ->with('error', "Aula não excluida. (Erro: $errorCod)");
         }

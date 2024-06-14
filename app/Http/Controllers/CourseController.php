@@ -6,6 +6,7 @@ use App\Http\Requests\CourseRequest;
 use App\Models\Course;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
@@ -15,7 +16,6 @@ class CourseController extends Controller
         //Receber dado do DB
 
         // $courses = Course::where('id', 1000)->get();
-        
         // $courses = Course::paginate(1);
         
         $courses = Course::orderBy('id', 'ASC')->get();
@@ -47,14 +47,32 @@ class CourseController extends Controller
         
         //validar os dados do request
         $request->validated();
-        // Salvar as informações do form no DB
-        Course::create([
-            'name' => $request->name,
-            'price' => $request->price,
-        ]);
-        
-        return redirect()->route('courses.index')
-        ->with('success', 'Curso cadastrado com sucesso');
+
+        // Abrir query no banco de dados
+        DB::beginTransaction();
+
+        // Tenta salvar no Banco de Dados
+        try {
+            // Salvar as informações do form no DB
+            Course::create([
+                'name' => $request->name,
+                'price' => $request->price,
+            ]);
+            
+            // Confirma a transação
+            DB::commit();
+
+            return redirect()->route('courses.index')
+            ->with('success', 'Curso cadastrado com sucesso');
+
+        } catch (Exception $e){
+
+            // Desfaz a transação
+            DB::rollBack();
+
+            return back()->withInput()->with('error', 'Curso não foi cadastrado');
+
+        }
     }
 
      // Formulario para editar o curso
@@ -69,37 +87,62 @@ class CourseController extends Controller
      // Editar o Curso no Banco de Dados
      public function update(CourseRequest $request, Course $course){
         
-        // dd($course); 
-        // dd($request); 
-
-        //validar os dados do request
+          //validar os dados do request
         $request->validated();
+        
+        // Abrir query no banco de dados
+        DB::beginTransaction();
 
-        // Editar no Banco de Dados
-        $course->update([
-            'name' => $request->name,
-            'price' => $request->price,
-        ]);
+        // Tenta editar no Banco de Dados
+        try {
 
-        // Carregar a View
-        return redirect()->route('courses.index')
-        ->with('success', 'Curso Editado com sucesso');    
+            // Editar no Banco de Dados
+            $course->update([
+                'name' => $request->name,
+                'price' => $request->price,
+            ]);
+
+            // Confirma a transação
+            DB::commit();
+
+            // Carregar a View
+            return redirect()->route('courses.index')
+            ->with('success', 'Curso Editado com sucesso');  
+            
+        } catch (Exception $e){
+
+            // Desfaz a transação
+            DB::rollBack();
+
+            return back()->withInput()->with('error', 'Curso não foi Editado');
+
+        }
+  
     }
 
     
      // Excluir o Curso no Banco de Dados
      public function destroy(Course $course){
         
+        // Abrir query no banco de dados
+        DB::beginTransaction();
+
+        // Tenta excluir no Banco de Dados
         try {
             // Excluir o registro
             $course->delete();
 
-            // Carregar a View
+            // Confirma a transação
+            DB::commit();
 
+            // Carregar a View
             return redirect()->route('courses.index')
             ->with('success', 'Curso excluido com Sucesso');
 
         } catch (Exception $e) {
+            
+            // Desfaz a transação
+            DB::rollBack();
             
             $errorCod = $e->getCode();
             return redirect()->route('courses.index')
