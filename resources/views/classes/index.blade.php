@@ -15,12 +15,12 @@
             <li class="breadcrumb-item active">Aulas</li>
         </ol>
     </div>
-    <div class="card mb-4">
+    <div class="card mb-4 border-info shadow">
         <div class="card-header hstack gap-3">
             <span>Listar Aulas | {{ $course->name }}</span>
             <span class="ms-auto">
-                <a href="{{ route('courses.index') }}" class="btn btn-info btn-sm">Cursos</a>
-                <a href="{{ route('classes.create', ['course' => $course->id]) }}" class="btn btn-success btn-sm">Cadastrar</a>
+                <a href="{{ route('courses.index') }}" class="btn btn-info btn-sm"><i class="fa-solid fa-list-ol"></i> Cursos</a>
+                <a href="{{ route('classes.create', ['course' => $course->id]) }}" class="btn btn-success btn-sm"><i class="fa-regular fa-square-plus"></i> Cadastrar</a>
             </span>
         </div>
 
@@ -28,7 +28,7 @@
             {{-- Componente de mensagens de alerta --}}
             <x-alert />
 
-            <table class="table table-striped table-hover table-bordered">
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th class="d-none d-sm-table-cell text-center">ID</th>
@@ -49,13 +49,13 @@
                         <td class="d-none d-xl-table-cell">{{ $classe->description }}</td>
                         <td>{{ $classe->course->name }}</td>
                         <td class="d-md-flex flex-row justify-content-center">
-                            <a href="{{ route('classes.show', ['classe' => $classe->id]) }}" class="btn btn-primary btn-sm me-1 mb-1 mb-md-0">Visualizar</a>
-                            <a href="{{ route('classes.edit', ['classe' => $classe->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-md-0">Editar</a>
+                            <a href="{{ route('classes.show', ['classe' => $classe->id]) }}" class="btn btn-primary btn-sm me-1 mb-1 mb-md-0"><i class="fa-regular fa-eye"></i> Visualizar</a>
+                            <a href="{{ route('classes.edit', ['classe' => $classe->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-md-0"><i class="fa-regular fa-pen-to-square"></i> Editar</a>
 
                             <form action="{{ route('classes.destroy', ['classe' => $classe->id]) }}" method="POST">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 mb-md-0" onclick="return confirm('Tem certeza que deseja EXCLUIR esse registro?')">Excluir</button>
+                                <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 mb-md-0" onclick="return confirm('Tem certeza que deseja EXCLUIR esse registro?')"><i class="fa-regular fa-trash-can"></i> Excluir</button>
                             </form>
                         </td>
                       </tr>

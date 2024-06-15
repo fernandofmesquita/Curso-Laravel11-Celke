@@ -15,17 +15,17 @@
             <li class="breadcrumb-item active">Aula</li>
         </ol>
     </div>
-    <div class="card mb-4">
+    <div class="card mb-4 border-primary shadow">
         <div class="card-header hstack gap-2">
             <span>Visualizar Aula</span>
             <span class="ms-auto d-sm-flex flex-row">
-                <a href="{{ route('courses.index') }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0">Cursos</a>
-                <a href="{{ route('classes.index', ['course' => $classe->course_id]) }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0">Aulas</a>
-                <a href="{{ route('classes.edit', ['classe' => $classe->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-sm-0">Editar</a>
+                <a href="{{ route('courses.index') }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0"><i class="fa-solid fa-list-ol"></i> Cursos</a>
+                <a href="{{ route('classes.index', ['course' => $classe->course_id]) }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0"><i class="fa-solid fa-list-ol"></i> Aulas</a>
+                <a href="{{ route('classes.edit', ['classe' => $classe->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-sm-0"><i class="fa-regular fa-pen-to-square"></i> Editar</a>
                 <form action="{{ route('classes.destroy', ['classe' => $classe->id]) }}" method="POST" onclick="return confirm('Tem certeza que deseja EXCLUIR esse registro?')">
                     @csrf
                     @method('delete')
-                    <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 mb-sm-0">Excluir</button>
+                    <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 mb-sm-0"><i class="fa-regular fa-trash-can"></i> Excluir</button>
                 </form>
             </span>
         </div>

@@ -19,11 +19,11 @@
             <li class="breadcrumb-item active">Aula</li>
         </ol>
     </div>
-    <div class="card mb-4">
+    <div class="card mb-4 border-success shadow">
         <div class="card-header hstack gap-2">
             <span>Cadastrar Aula</span>
             <span class="ms-auto d-sm-flex flex-row">
-                <a href="{{ route('classes.index', ['course' => $course->id]) }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0">Aulas</a>
+                <a href="{{ route('classes.index', ['course' => $course->id]) }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0"><i class="fa-solid fa-list-ol"></i> Aulas</a>
             </span>
         </div>
 
