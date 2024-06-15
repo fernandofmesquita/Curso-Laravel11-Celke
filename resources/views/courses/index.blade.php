@@ -61,10 +61,9 @@
                 </tbody>
 
             </table>
-
            
             {{-- imprimir Paginação --}}
-            {{-- {{ $courses->links() }} --}}
+            {{ $courses->links() }}
         </div>
     </div>
 </div>

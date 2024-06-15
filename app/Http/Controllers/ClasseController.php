@@ -18,7 +18,7 @@ class ClasseController extends Controller
         $classes = Classe::with('course')
             ->where('course_id', $course->id)
             ->orderBy('order_classe')
-            ->get();
+            ->paginate(3);
         
         // Carrega a view Index do curso especificado
         return view('classes.index', ['course' => $course,'classes' => $classes]);

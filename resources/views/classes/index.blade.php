@@ -71,7 +71,7 @@
 
            
             {{-- imprimir Paginação --}}
-            {{-- {{ $courses->links() }} --}}
+            {{ $classes->links() }}
         </div>
     </div>
 </div>

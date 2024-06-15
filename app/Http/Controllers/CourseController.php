@@ -17,9 +17,11 @@ class CourseController extends Controller
         //Receber dado do DB
 
         // $courses = Course::where('id', 1000)->get();
-        // $courses = Course::paginate(1);
+                
+        // $courses = Course::orderBy('id', 'ASC')->get();
         
-        $courses = Course::orderBy('id', 'ASC')->get();
+        $courses = Course::orderBy('id', 'ASC')->paginate(10);
+
 
         // Carregar a View
         return view('courses.index', ['courses' => $courses]);
