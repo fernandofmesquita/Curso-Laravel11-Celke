@@ -66,7 +66,7 @@ class CourseController extends Controller
             // Registrar no Log
             Log::info('Curso Cadastrado', ['course_id' => $course->id ]);
 
-            return redirect()->route('courses.index')
+            return redirect()->route('courses.show', ['course' => $course->id])
             ->with('success', 'Curso cadastrado com sucesso');
 
         } catch (Exception $e){
@@ -116,7 +116,7 @@ class CourseController extends Controller
             Log::info('Curso Editado', ['course_id' => $course->id ]);
 
             // Carregar a View
-            return redirect()->route('courses.index')
+            return redirect()->route('courses.show', ['course' => $course->id])
             ->with('success', 'Curso Editado com sucesso');  
             
         } catch (Exception $e){
