@@ -3,13 +3,16 @@
 @section('content')
 
 <div class="container-fluid px-4">
-    <div class="mb-1 hstack gap-3">
+    <div class="mb-1 hstack gap-2">
         <h2 class="mt-2">Curso</h2>
+
         <ol class="breadcrumb mb-3 mt-3 ms-auto">
             <li class="breadcrumb-item">
                 <a href="#" class="text-decoration-none">Dashboard</a>
             </li>
-            
+            <li class="breadcrumb-item">
+                <a href="{{ route('courses.index') }}" class="text-decoration-none">Cursos</a>
+            </li>
             <li class="breadcrumb-item active">Curso</li>
         </ol>
     </div>

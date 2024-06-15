@@ -14,7 +14,7 @@
     </div>
     <div class="card mb-4">
         <div class="card-header hstack gap-2">
-            <span>Listar</span>
+            <span>Listar Cursos</span>
             <span class="ms-auto">
                 <a href="{{ route('courses.create') }}" class="btn btn-success btn-sm">Cadastrar</a>
             </span>
