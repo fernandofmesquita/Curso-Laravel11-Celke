@@ -1,23 +1,23 @@
 {{-- Mensagem de Sucesso ao cadastrar no DB --}}
 @if (session('success'))
-    <p style="color: green">
+    <div class="alert alert-success" role="alert">
         {{ session('success') }}
-    </p>
+    </div>
 @endif
 
 {{-- Mensagem de Erro ao cadastrar no DB --}}
 @if (session('error'))
-    <p style="color: red">
+    <div class="alert alert-danger" role="alert">
         {{ session('error') }}
-    </p>
+    </div>
 @endif
 
 
 {{-- Validação de Campos --}}
 @if ($errors->any())
-    <span style="color: red">
+    <div class="alert alert-danger" role="alert">
         @foreach ($errors->all() as $error)
             {{ $error }} <br>
         @endforeach
-    </span>
+    </div>
 @endif

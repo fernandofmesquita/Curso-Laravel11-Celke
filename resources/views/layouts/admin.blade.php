@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles_sbadmin.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
     <title>Curso de Laravel</title>
 </head>
 
@@ -113,9 +114,9 @@
                     <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; Fernando Mesquita {{ date('Y') }}</div>
                         <div>
-                            <a href="#">Privacy Policy</a>
+                            <a href="#" class="text-decoration-none">Privacy Policy</a>
                             &middot;
-                            <a href="#">Terms &amp; Conditions</a>
+                            <a href="#" class="text-decoration-none">Terms &amp; Conditions</a>
                         </div>
                     </div>
                 </div>
@@ -125,7 +126,7 @@
 
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/scripts_sbadmin.js') }}"></script>
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/all.min.js') }}"></script>
 </body>
 
 </html>

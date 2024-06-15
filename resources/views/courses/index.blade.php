@@ -3,41 +3,69 @@
 @section('content')
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Cursos</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Listar os Cursos</li>
-    </ol>
-    <div class="row">
-        <a href="{{ route('courses.create') }}"><button class="btn btn-primary" type="button">Cadastrar</button></a><br><br><hr><br>
-        
+    <div class="mb-1 hstack gap-2">
+        <h2 class="mt-2">Cursos</h2>
+        <ol class="breadcrumb mb-3 mt-3 ms-auto">
+            <li class="breadcrumb-item">
+                <a href="#" class="text-decoration-none">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Cursos</li>
+        </ol>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header hstack gap-2">
+            <span>Listar</span>
+            <span class="ms-auto">
+                <a href="{{ route('courses.create') }}" class="btn btn-success btn-sm">Cadastrar</a>
+            </span>
+        </div>
 
-        {{-- Componente de mensagens de alerta --}}
-        <x-alert />
+        <div class="card-body">
+            {{-- Componente de mensagens de alerta --}}
+            <x-alert />
 
-        
-        {{-- Listar os registros --}}
-        @forelse ($courses as $course)
-            <b>ID:</b> {{ $course->id }}
-            <b>Name:</b> {{ $course->name }}
-            <b>Preço:</b> {{ 'R$ '. number_format($course->price, 2, ',', '.') }}<br>
-            <b>Data de Cadastro:</b> {{ \Carbon\Carbon::parse($course->created_at)->format('d/m/Y H:i:s') }}<br>
-            <b>Data de Edição:</b> {{ \Carbon\Carbon::parse($course->updated_at)->tz('America/Fortaleza')->format('d/m/Y H:i:s') }}<br><br>
-            <a href="{{ route('classes.index', ['course' => $course->id]) }}"><button type="button">Aulas</button></a><br>
-            <a href="{{ route('courses.show', ['course' => $course->id]) }}"><button type="button">Visualizar</button></a><br>
-            <a href="{{ route('courses.edit', ['course' => $course->id]) }}"><button type="button">Editar</button></a>
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th class="d-none d-sm-table-cell text-center">ID</th>
+                        <th>Name</th>
+                        <th class="d-none d-md-table-cell text-center">Preço</th>
+                        <th class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{-- Listar os registros --}}
+                    @forelse ($courses as $course)
+                    <tr>
+                        <th class="d-none d-sm-table-cell text-center">{{ $course->id }}</th>
+                        <td>{{ $course->name }}</td>
+                        <td class="d-none d-md-table-cell text-center">{{ 'R$ '. number_format($course->price, 2, ',', '.') }}</td>
+                        <td class="d-md-flex flex-row justify-content-center">
+                            <a href="{{ route('classes.index', ['course' => $course->id]) }}" class="btn btn-info btn-sm me-1 mb-1 mb-md-0">Aulas</a>
+                            <a href="{{ route('courses.show', ['course' => $course->id]) }}" class="btn btn-primary btn-sm me-1 mb-1 mb-md-0">Visualizar</a>
+                            <a href="{{ route('courses.edit', ['course' => $course->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-md-0">Editar</a>
 
-            <form action="{{ route('courses.destroy', ['course' => $course->id]) }}" method="POST">
-                @csrf
-                @method('delete')
-                <button type="submit" onclick="return confirm('Tem certeza que deseja EXCLUIR esse registro?')">Excluir</button>
-            </form>
-            <br><hr><br>
-        @empty
-            <p style="color: red">Não existe cursos cadastrados</p>
-        @endforelse
+                            <form action="{{ route('courses.destroy', ['course' => $course->id]) }}" method="POST">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 mb-md-0" onclick="return confirm('Tem certeza que deseja EXCLUIR esse registro?')">Excluir</button>
+                            </form>
+                        </td>
+                      </tr>
 
-        {{-- imprimir Paginação --}}
-        {{-- {{ $courses->links() }} --}}
+                    @empty
+                        <div class="alert alert-danger" role="alert">
+                            Não existe cursos cadastrados
+                        </div>
+                    @endforelse
+                </tbody>
+
+            </table>
+
+           
+            {{-- imprimir Paginação --}}
+            {{-- {{ $courses->links() }} --}}
+        </div>
     </div>
 </div>
       

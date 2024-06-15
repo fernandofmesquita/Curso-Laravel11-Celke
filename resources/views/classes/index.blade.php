@@ -1,29 +1,76 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h2>Listar as Aulas</h2>
 
-    <a href="{{ route('courses.index') }}"><button  type="button">Listar Cursos</button></a> 
-    <a href="{{ route('classes.create', ['course' => $course->id]) }}"><button  type="button">Cadastrar Aula</button></a><br><br><hr><br>
-    
+<div class="container-fluid px-4">
+    <div class="mb-1 hstack gap-2">
+        <h2 class="mt-2">Aulas</h2>
+        <ol class="breadcrumb mb-3 mt-3 ms-auto">
+            <li class="breadcrumb-item">
+                <a href="#" class="text-decoration-none">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Aulas</li>
+        </ol>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header hstack gap-3">
+            <span>Listar</span>
+            <span class="ms-auto">
+                <a href="{{ route('courses.index') }}" class="btn btn-info btn-sm">Cursos</a>
+                <a href="{{ route('classes.create', ['course' => $course->id]) }}" class="btn btn-success btn-sm">Cadastrar</a>
+            </span>
+        </div>
 
-    {{-- Componente de mensagens de alerta --}}
-    <x-alert />
+        <div class="card-body">
+            {{-- Componente de mensagens de alerta --}}
+            <x-alert />
 
-    @forelse ($classes as $classe)
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th class="d-none d-sm-table-cell text-center">ID</th>
+                        <th>Name</th>
+                        <th class="d-none d-sm-table-cell text-center">Ordem</th>
+                        <th class="d-none d-xl-table-cell">Descrição</th>
+                        <th>Curso</th>
+                        <th class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{-- Listar os registros --}}
+                    @forelse ($classes as $classe)
+                    <tr>
+                        <th class="d-none d-sm-table-cell text-center">{{ $classe->id }}</th>
+                        <td>{{ $classe->name }}</td>
+                        <td class="d-none d-sm-table-cell text-center">{{ $classe->order_classe }}</td>
+                        <td class="d-none d-xl-table-cell">{{ $classe->description }}</td>
+                        <td>{{ $classe->course->name }}</td>
+                        <td class="d-md-flex flex-row justify-content-center">
+                            <a href="{{ route('classes.show', ['classe' => $classe->id]) }}" class="btn btn-primary btn-sm me-1 mb-1 mb-md-0">Visualizar</a>
+                            <a href="{{ route('classes.edit', ['classe' => $classe->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-md-0">Editar</a>
 
-        <b>ID: </b> {{ $classe->id }} <br>
-        <b>Nome: </b> {{ $classe->name }} <br>
-        <b>Ordem: </b> {{ $classe->order_classe }} <br>
-        <b>Descrição: </b> {{ $classe->description }} <br>
-        <b>Curso: </b> {{ $classe->course->name }} <br>
-        <b>Data de Cadastro:</b> {{ \Carbon\Carbon::parse($classe->created_at)->format('d/m/Y H:i:s') }}<br>
-        <b>Data de Edição:</b> {{ \Carbon\Carbon::parse($classe->updated_at)->tz('America/Fortaleza')->format('d/m/Y H:i:s') }}<br><br>
-        <a href="{{ route('classes.show', ['classe' => $classe->id]) }}"><button type="button">Visualizar</button></a>
-        <a href="{{ route('classes.edit', ['classe' => $classe->id]) }}"><button type="button">Editar</button></a> <br> <br>
-        <hr><br>
-    @empty
-    <p style="color: red">Não existe Aulas cadastradas</p>
-    @endforelse
+                            <form action="{{ route('classes.destroy', ['classe' => $classe->id]) }}" method="POST">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 mb-md-0" onclick="return confirm('Tem certeza que deseja EXCLUIR esse registro?')">Excluir</button>
+                            </form>
+                        </td>
+                      </tr>
 
+                    @empty
+                        <div class="alert alert-danger" role="alert">
+                            Não existe cursos cadastrados
+                        </div>
+                    @endforelse
+                </tbody>
+
+            </table>
+
+           
+            {{-- imprimir Paginação --}}
+            {{-- {{ $courses->links() }} --}}
+        </div>
+    </div>
+</div>
+      
 @endsection
