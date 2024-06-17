@@ -21,14 +21,14 @@ class ClasseController extends Controller
             ->paginate(10);
         
         // Carrega a view Index do curso especificado
-        return view('classes.index', ['course' => $course,'classes' => $classes]);
+        return view('classes.index', ['menu' => 'courses', 'course' => $course,'classes' => $classes]);
     }
 
     // Recuperar o curso do banco de dados e injeta na variavel $course
     public function create(Course $course)
     {
         // Carrega a view e passa os dados do Curso
-        return view('classes.create', ['course' => $course]);
+        return view('classes.create', ['menu' => 'courses', 'course' => $course]);
     }
 
     // Recupera dos dados do formulário create
@@ -85,7 +85,7 @@ class ClasseController extends Controller
     public function edit(Classe $classe)
     {
         // Carrega a view e passa os dados da Aula
-        return view('classes.edit', ['classe' => $classe]);
+        return view('classes.edit', ['menu' => 'courses', 'classe' => $classe]);
     }
 
 
@@ -138,7 +138,7 @@ class ClasseController extends Controller
     public function show(Classe $classe)
     {
         // Retorna a View da Aula especificada
-        return view('classes.show', ['classe' => $classe]);
+        return view('classes.show', ['menu' => 'courses', 'classe' => $classe]);
     }
 
 

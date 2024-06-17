@@ -7,7 +7,7 @@
         <h2 class="mt-2">Aulas</h2>
         <ol class="breadcrumb mb-3 mt-3 ms-auto">
             <li class="breadcrumb-item">
-                <a href="/" class="text-decoration-none">Dashboard</a>
+                <a href="{{ route('dashboard.index') }}" class="text-decoration-none">Dashboard</a>
             </li>
             <li class="breadcrumb-item">
                 <a href="{{ route('courses.index') }}" class="text-decoration-none">Cursos</a>
@@ -46,7 +46,7 @@
                         <th class="d-none d-sm-table-cell text-center">{{ $classe->id }}</th>
                         <td>{{ $classe->name }}</td>
                         <td class="d-none d-sm-table-cell text-center">{{ $classe->order_classe }}</td>
-                        <td class="d-none d-xl-table-cell">{{ $classe->description }}</td>
+                        <td class="d-none d-xl-table-cell">{{ Str::limit($classe->description, 50) }}</td>
                         <td>{{ $classe->course->name }}</td>
                         <td class="d-md-flex flex-row justify-content-center">
                             <a href="{{ route('classes.show', ['classe' => $classe->id]) }}" class="btn btn-primary btn-sm me-1 mb-1 mb-md-0"><i class="fa-regular fa-eye"></i> Visualizar</a>

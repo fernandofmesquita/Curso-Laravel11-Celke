@@ -24,7 +24,7 @@ class CourseController extends Controller
 
 
         // Carregar a View
-        return view('courses.index', ['courses' => $courses]);
+        return view('courses.index', ['menu' => 'courses', 'courses' => $courses]);
     }
 
     // Visualizar o curso
@@ -35,14 +35,14 @@ class CourseController extends Controller
         // $course = Course::where('id', $request->course)->first();
 
         // Carregar a View
-        return view('courses.show', ['course' => $course]);
+        return view('courses.show', ['menu' => 'courses', 'course' => $course]);
     }
 
     // Formulario para cadastrar o curso
     public function create(){
         
         // Carregar a View
-        return view('courses.create');
+        return view('courses.create', ['menu' => 'courses']);
     }
 
     // Cadastrar o Curso no Banco de Dados
@@ -90,7 +90,7 @@ class CourseController extends Controller
         // dd($course);
 
         // Carregar a View
-        return view('courses.edit', ['course' => $course]);
+        return view('courses.edit', ['menu' => 'courses', 'course' => $course]);
     }
 
      // Editar o Curso no Banco de Dados

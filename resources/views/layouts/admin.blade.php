@@ -6,12 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles_sbadmin.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/styles_admin.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
     <title>Curso de Laravel</title>
 </head>
 
 <body class="sb-nav-fixed">
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-primary">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-nav">
         <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="index.html">Curso de Laravel</a>
         <!-- Sidebar Toggle-->
@@ -38,16 +39,16 @@
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
-            <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+            <nav class="sb-sidenav accordion sb-sidenav-five" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         
-                        <a class="nav-link" href="/">
+                        <a @class(['nav-link', 'active' => isset($menu) && $menu == 'dashboard']) href="{{ route('dashboard.index') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
                         
-                        <a class="nav-link" href="{{ route('courses.index') }}">
+                        <a @class(['nav-link', 'active' => isset($menu) && $menu == 'courses']) href="{{ route('courses.index') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
                             Cursos
                         </a>
