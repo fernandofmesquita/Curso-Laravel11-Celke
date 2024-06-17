@@ -6,3 +6,6 @@ import './scripts_sbadmin';
 
 /* Importar o JS do Font Awesome */
 import '@fortawesome/fontawesome-free/js/all';
+
+/* Importar o JS Admin Personalizado */
+import './scripts_admin';

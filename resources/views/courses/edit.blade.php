@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-md-12">
                     <label for="price" class="form-label">Preço: </label>
-                    <input type="text" class="form-control" name="price" id="price" placeholder="Digite o preço do curso" value="{{ old('price', $course->price) }}" required>
+                    <input type="text" class="form-control" name="price" id="price" placeholder="Digite o preço do curso" value="{{ old('price', isset($course->price) ? number_format($course->price, '2', ',', '.') : '') }}" required>
                 </div>
         </div>
         <div class="card-footer">

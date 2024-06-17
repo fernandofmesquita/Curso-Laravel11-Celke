@@ -59,7 +59,7 @@ class CourseController extends Controller
             // Salvar as informações do form no DB
             $course = Course::create([
                 'name' => $request->name,
-                'price' => $request->price,
+                'price' => str_replace(',', '.', str_replace('.', '', $request->price)),
             ]);
             
             // Confirma a transação
@@ -108,7 +108,7 @@ class CourseController extends Controller
             // Editar no Banco de Dados
             $course->update([
                 'name' => $request->name,
-                'price' => $request->price,
+                'price' => str_replace(',', '.', str_replace('.', '', $request->price)),
             ]);
 
             // Confirma a transação
