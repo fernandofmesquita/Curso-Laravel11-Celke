@@ -1,0 +1,8 @@
+/* Importar o CSS do layout do SB Admin */
+@import 'styles_sbadmin.css';
+
+/* Importar o CSS da personalização do layout do SB Admin */
+@import 'styles_admin.css';
+
+/* Importar Font Awesome */
+@import '@fortawesome/fontawesome-free/css/all.css';

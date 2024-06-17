@@ -4,9 +4,17 @@
 
 * PHP 8.2 ou superior
 * Composer
+* Node.js 20 ou superior
+* GIT
 
 
 ## Sequencia para criar o projeto
+
+Acesse ou crie uma pasta de sua preferencia, abra o terminal (cmd) nessa pasta e execute os comando para criar o projeto
+
+```
+mkdir meu-projeto && cd meu-projeto
+```
 
 Criar o projeto com o Laravel
 ```
@@ -41,6 +49,11 @@ Insatalar as dependências do PHP
 composer install
 ```
 
+Insatalar as dependências node.JS
+```
+npm install
+```
+
 Gerar a chave
 ```
 php artisan key:generate
@@ -60,6 +73,12 @@ Inciar o Projeto criado com Laravel
 ```
 php artisan serve
 ```
+
+Executar as dependencias Node.JS
+```
+npm rum dev
+```
+
 
 
 ## Instalar o Laravel Auditing
@@ -139,6 +158,34 @@ Limpar cache de configuração (Somente se não funcionar)
 ```
 php artisan config:clear
 ```
+
+## Instalar Bootstrap 5 com o PopperJS
+
+Instala dependencias Node.JS
+```
+npm install
+```
+
+Instala o bootstrap e popper
+```
+npm i --save bootstrap @popperjs/core
+```
+
+Executar as dependencias Node.JS
+```
+npm rum dev
+```
+
+## Instalar Biblioteca de Icones 
+
+Icones [Font Awesome](https://fontawesome.com/icons)
+
+Instalar a Biblioteca de Icones Free
+
+```
+npm i --save @fortawesome/fontawesome-free
+```
+
 
 ## Como usar o GitHub
 
