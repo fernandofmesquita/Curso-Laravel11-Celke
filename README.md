@@ -241,6 +241,10 @@ Utilizar o nome da controller no singular. Nome da tabela no plural e nome da co
 ```
 php artisan make:controller CourseController
 ```
+Ou já com os resource
+```
+php artisan make:controller CourseController --resource
+```
 
 ## Criar uma View
 ```
