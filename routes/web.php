@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [LoginController::class, 'index'])->name('login.index');
 Route::post('/login', [LoginController::class, 'loginProcess'])->name('login.process');
 Route::get('/logout', [LoginController::class, 'destroy'])->name('login.destroy');
+Route::get('/create-login', [LoginController::class, 'create'])->name('login.create');
+Route::post('/store-login', [LoginController::class, 'store'])->name('login.store');
+
 
 
 //Inicio das  Rotas Privadas

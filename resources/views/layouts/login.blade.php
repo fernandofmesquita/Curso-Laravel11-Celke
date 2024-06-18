@@ -12,7 +12,7 @@
     <title>Curso de Laravel 11</title>
 </head>
 
-<body class="bg-primary">  
+<body class="bg-custom">  
     
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">

@@ -2,6 +2,10 @@
     background-color: #183181;
 }
 
+.bg-custom{
+  background-color: #183181;
+}
+
 .sb-sidenav-five {
   background-color: #f9fafc;
   box-shadow: 0 8px 14px rgba(0, 0, 0, .10), 0 8px 8px rgba(0, 0, 0, .10) !important;

@@ -10,7 +10,7 @@
 
                 <x-alert />
 
-                <form action="{{ route('login.store-user') }}" method="POST">
+                <form action="{{ route('login.store') }}" method="POST">
                     @csrf
                     @method('POST')
 
@@ -30,6 +30,12 @@
                         <input type="password" name="password" class="form-control" id="password"
                             placeholder="Digite a senha">
                         <label for="password">Senha</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" name="invite" class="form-control" id="invite"
+                            placeholder="Digite código do convite"  value="{{ old('invite') }}" required>
+                        <label for="invite">Código do Convite</label>
                     </div>
 
                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">

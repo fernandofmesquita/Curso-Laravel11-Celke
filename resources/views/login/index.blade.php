@@ -36,7 +36,7 @@
 
             <div class="card-footer text-center py-3">
                 <div class="small">
-                    Precisa de uma conta? <a href="" class="text-decoration-none">Inscrever-se!</a>
+                    Precisa de uma conta? <a href="{{ route('login.create') }}" class="text-decoration-none">Inscrever-se!</a>
                 </div>
 
                 <div class="small">
