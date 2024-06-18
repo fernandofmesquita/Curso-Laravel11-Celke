@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -17,6 +18,10 @@ Route::get('/logout', [LoginController::class, 'destroy'])->name('login.destroy'
 Route::get('/create-login', [LoginController::class, 'create'])->name('login.create');
 Route::post('/store-login', [LoginController::class, 'store'])->name('login.store');
 
+// Recuperar Senha
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotPassword'])->name('forgot-password.show');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'submitForgotPassword'])->name('forgot-password.submint');
+Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetPassword'])->name('password.reset');
 
 
 //Inicio das  Rotas Privadas

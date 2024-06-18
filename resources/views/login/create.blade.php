@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        <button type="submit" class="btn btn-sm btn-primary">Cadastrar</button>
                     </div>
 
                 </form>

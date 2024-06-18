@@ -39,7 +39,7 @@ class ProfileController extends Controller
         $request->validate(
         [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . ($user ? $user->id : null),
+            'email' => 'required|email|unique:users,email,' . Auth::id(),
         ], 
         [
             'name.required' => 'Campo nome é obrigatório!',

@@ -4,13 +4,13 @@
     <div class="col-lg-5">
         <div class="card shadow-lg border-0 rounded-lg mt-5">
             <div class="card-header">
-                <h3 class="text-center font-weight-light my-4">Área Restrita</h3>
+                <h3 class="text-center font-weight-light my-4">Recuperar Senha</h3>
             </div>
             <div class="card-body">
 
                 <x-alert />
 
-                <form action="{{ route('login.process') }}" method="POST">
+                <form action="{{ route('forgot-password.submint') }}" method="POST">
                     @csrf
                     @method('POST')
 
@@ -20,15 +20,9 @@
                         <label for="email">E-mail</label>
                     </div>
 
-                    <div class="form-floating mb-3">
-                        <input type="password" name="password" class="form-control" id="password"
-                            placeholder="Digite a senha">
-                        <label for="password">Senha</label>
-                    </div>
-
                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                        <a href="{{ route('forgot-password.show') }}" class="small text-decoration-none">Esqueceu a senha?</a>
-                        <button type="submit" class="btn btn-sm btn-primary">Acessar</button>
+                        
+                        <button type="submit" class="btn btn-sm btn-primary" onclick="this.innerText = 'Recuperando...'">Recuperar</button>
                     </div>
 
                 </form>
@@ -36,12 +30,7 @@
 
             <div class="card-footer text-center py-3">
                 <div class="small">
-                    Precisa de uma conta? <a href="{{ route('login.create') }}" class="text-decoration-none">Inscrever-se!</a>
-                </div>
-
-                <div class="small">
-                    Usuário: admin@admin.com<br>
-                    Senha: 123456
+                    <a href="{{ route('login.index') }}" class="text-decoration-none">Clique aqui</a> para acessar.
                 </div>
             </div>
 

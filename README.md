@@ -2,10 +2,10 @@
 
 ## Requisitos
 
-* PHP 8.2 ou superior
-* Composer
-* Node.js 20 ou superior
-* GIT
+* PHP 8.2+ | Apache 2.4+ | phpMyAdmin 5.2+ ( [XAMPP](https://www.apachefriends.org) )
+* Composer [Download](https://getcomposer.org) 
+* Node.js 20 ou superior [Download](https://nodejs.org) 
+* GIT [Download](https://www.git-scm.com) 
 
 
 ## Sequencia para criar o projeto
@@ -42,7 +42,24 @@ git clone --branch dev-master https://github.com/fernandofmesquita/Curso-Laravel
 
 ## Como rodar o projeto baixado
 
-Duplicar o arquivo ".env.exemplo" e renomear para ".env" e realizar as alterações. <br>
+Duplicar o arquivo ".env.exemplo" e renomear para ".env" e realizar as alterações.
+
+Realizar o cadastro do site [Mailtrap.io](https://mailtrap.io) 
+
+Pegar as credenciais da conta para o Laravel e realizar alterações no .env
+
+```
+EXEMPLO
+
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=7a236985532b32
+MAIL_PASSWORD=********ea1f
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="sac@cursolaravel.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
 
 Insatalar as dependências do PHP
 ```
@@ -78,7 +95,6 @@ Executar as dependencias Node.JS
 ```
 npm rum dev
 ```
-
 
 
 ## Instalar o Laravel Auditing
@@ -292,4 +308,11 @@ php artisan make:component <nome> --view
 ```
 ```
 php artisan make:component alert --view
+```
+
+## Personalizar e-mail de recuperação de senha
+
+Publicar os arquivos na pasta resources\views\vendor
+```
+php artisan vendor:publish --tag=laravel-mail
 ```
