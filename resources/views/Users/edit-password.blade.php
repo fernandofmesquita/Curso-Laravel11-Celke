@@ -31,7 +31,7 @@
             {{-- Componente de mensagens de alerta --}}
             <x-alert />
 
-            {{-- Formulario de cadastro de Usuário  --}}
+            
             <form class="row g-3" action="{{ route('users.update-password', ['user' => $user->id])}}" method="POST" >
                 @csrf
                 @method('PUT')
