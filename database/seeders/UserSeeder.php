@@ -14,6 +14,15 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        if (!User::where('email', 'admin@admin.com')->first()){
+            User::create([
+                'name' => 'Admin',
+                'email' => 'admin@admin.com',
+                'password' => Hash::make('123456', ['rounds' => 12])
+            ]);
+
+        }
+        
         if (!User::where('email', 'maria@maria.com')->first()){
             User::create([
                 'name' => 'Maria',
