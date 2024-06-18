@@ -8,9 +8,15 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
+// Inicio das Rotas Publicas
 //Login
 Route::get('/', [LoginController::class, 'index'])->name('login.index');
 Route::post('/login', [LoginController::class, 'loginProcess'])->name('login.process');
+Route::get('/logout', [LoginController::class, 'destroy'])->name('login.destroy');
+
+
+//Inicio das  Rotas Privadas
+Route::group(['middleware' => 'auth'], function(){
 
 // Dashboard
 Route::get('/index-dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
@@ -45,3 +51,5 @@ Route::post('/store-classe', [ClasseController::class, 'store'])->name('classes.
 Route::get('/edit-classe/{classe}', [ClasseController::class, 'edit'])->name('classes.edit');
 Route::put('/update-classe/{classe}', [ClasseController::class, 'update'])->name('classes.update');
 Route::delete('/destroy-classe/{classe}', [ClasseController::class, 'destroy'])->name('classes.destroy');
+
+});

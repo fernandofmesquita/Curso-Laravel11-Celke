@@ -34,4 +34,11 @@ class LoginController extends Controller
 
         return redirect()->route('dashboard.index');
     }
+
+    public function destroy()
+    {
+        Auth::logout();
+
+        return redirect()->route('login.index')->with('success', 'Deslogado com sucesso.');
+    }
 }

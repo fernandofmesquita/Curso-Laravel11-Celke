@@ -33,7 +33,7 @@
                     <li><a class="dropdown-item" href="#!">Perfil</a></li>
                     
                     <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="#!">Sair</a></li>
+                    <li><a class="dropdown-item" href="{{ route('login.destroy') }}">Sair</a></li>
                 </ul>
             </li>
         </ul>
@@ -59,7 +59,7 @@
                             Cursos
                         </a>
 
-                        <a class="nav-link" href="{{ route('login.index') }}">
+                        <a class="nav-link" href="{{ route('login.destroy') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-arrow-right-to-bracket"></i></div>
                             Sair
                         </a>
@@ -104,9 +104,12 @@
                 </div>
 
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logado:</div>
-                    Usuário
-                </div>
+
+                    <div class="small">Logado:
+                        @if (auth()->check())
+                            <b>{{ auth()->user()->name }}</b>
+                        @endif
+                    </div>
             </nav>
         </div>
         <div id="layoutSidenav_content">
