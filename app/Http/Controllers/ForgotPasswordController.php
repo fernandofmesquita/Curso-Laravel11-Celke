@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 
@@ -54,6 +55,40 @@ class ForgotPasswordController extends Controller
 
     public function showResetPassword(Request $request)
     {
-        dd($request->token);
+        return view('login.resetPassword', ['token' => $request->token]);
+    }
+
+    public function submitResetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users',
+            'password' => 'required|min:6|confirmed'
+        ]);
+
+        try {
+
+            $status = Password::reset( $request->only('email', 'password', 'password_confirmation', 'token'),
+                function (User $user, string $password){
+                    $user->forceFill([
+                        'password' => Hash::make($password)
+                    ]);
+
+                    $user->save();
+
+                }
+        
+             );
+            
+            Log::info('Senha atualizada', ['resposta' => $status, 'email' => $request->email]);
+
+            return $status === Password::PASSWORD_RESET ? redirect()->route('login.index')
+                ->with('success', 'Senha atualizada com sucesso!') : redirect()->route('login.index')->with('error', __($status));
+
+        } catch (Exception $e) {
+
+            Log::warning('Erro atualizar senha.', ['error' => $e->getMessage(), 'email' => $request->email]);
+
+            return back()->withInput()->with('error', 'Ocorreu um erro. Tente mais tarde!');
+        }
     }
 }
