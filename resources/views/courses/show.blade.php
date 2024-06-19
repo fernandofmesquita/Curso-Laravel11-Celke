@@ -11,7 +11,9 @@
                 <a href="{{ route('dashboard.index') }}" class="text-decoration-none">Dashboard</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="{{ route('courses.index') }}" class="text-decoration-none">Cursos</a>
+                @can('index-course')
+                    <a href="{{ route('courses.index') }}" class="text-decoration-none">Cursos</a>
+                @endcan
             </li>
             <li class="breadcrumb-item active">Curso</li>
         </ol>
@@ -20,14 +22,27 @@
         <div class="card-header hstack gap-2">
             <span>Visualizar Curso</span>
             <span class="ms-auto d-sm-flex flex-row">
-                <a href="{{ route('courses.index') }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0"><i class="fa-solid fa-list-ol"></i> Cursos</a>
+
+                @can('index-course')
+                    <a href="{{ route('courses.index') }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0"><i class="fa-solid fa-list-ol"></i> Cursos</a>
+                @endcan
+
+                @can('index-classes')
                 <a href="{{ route('classes.index', ['course' => $course->id]) }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0"><i class="fa-solid fa-list-ol"></i> Aulas</a>
-                <a href="{{ route('courses.edit', ['course' => $course->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-sm-0"><i class="fa-regular fa-pen-to-square"></i> Editar</a>
-                <form action="{{ route('courses.destroy', ['course' => $course->id]) }}" method="POST" onclick="return confirm('Tem certeza que deseja EXCLUIR esse registro?')">
-                    @csrf
-                    @method('delete')
-                    <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 mb-sm-0"><i class="fa-regular fa-trash-can"></i> Excluir</button>
-                </form>
+                @endcan
+                
+                @can('edit-course')
+                    <a href="{{ route('courses.edit', ['course' => $course->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-md-0"><i class="fa-regular fa-pen-to-square"></i> Editar</a>
+                @endcan
+                
+                @can('destroy-course')
+                    <form action="{{ route('courses.destroy', ['course' => $course->id]) }}" method="POST">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 mb-md-0" onclick="return confirm('Tem certeza que deseja EXCLUIR esse registro?')"><i class="fa-regular fa-trash-can"></i> Excluir</button>
+                    </form>
+                @endcan
+
             </span>
         </div>
 

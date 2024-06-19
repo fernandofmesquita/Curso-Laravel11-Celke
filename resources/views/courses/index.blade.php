@@ -16,7 +16,11 @@
         <div class="card-header hstack gap-2">
             <span>Listar Cursos</span>
             <span class="ms-auto">
-                <a href="{{ route('courses.create') }}" class="btn btn-success btn-sm"><i class="fa-regular fa-square-plus"></i> Cadastrar</a>
+
+                @can('create-course')
+                    <a href="{{ route('courses.create') }}" class="btn btn-success btn-sm"><i class="fa-regular fa-square-plus"></i> Cadastrar</a>
+                @endcan
+
             </span>
         </div>
 
@@ -41,15 +45,26 @@
                         <td>{{ $course->name }}</td>
                         <td class="d-none d-md-table-cell text-center">{{ 'R$ '. number_format($course->price, 2, ',', '.') }}</td>
                         <td class="d-md-flex flex-row justify-content-center">
-                            <a href="{{ route('classes.index', ['course' => $course->id]) }}" class="btn btn-info btn-sm me-1 mb-1 mb-md-0"><i class="fa-solid fa-list-ol"></i> Aulas</a>
-                            <a href="{{ route('courses.show', ['course' => $course->id]) }}" class="btn btn-primary btn-sm me-1 mb-1 mb-md-0"><i class="fa-regular fa-eye"></i> Visualizar</a>
-                            <a href="{{ route('courses.edit', ['course' => $course->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-md-0"><i class="fa-regular fa-pen-to-square"></i> Editar</a>
+                            
+                            @can('index-classes')
+                               <a href="{{ route('classes.index', ['course' => $course->id]) }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0"><i class="fa-solid fa-list-ol"></i> Aulas</a>
+                            @endcan
+                            
+                            @can('show-course')
+                                <a href="{{ route('courses.show', ['course' => $course->id]) }}" class="btn btn-primary btn-sm me-1 mb-1 mb-md-0"><i class="fa-regular fa-eye"></i> Visualizar</a>
+                            @endcan
 
-                            <form action="{{ route('courses.destroy', ['course' => $course->id]) }}" method="POST">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 mb-md-0" onclick="return confirm('Tem certeza que deseja EXCLUIR esse registro?')"><i class="fa-regular fa-trash-can"></i> Excluir</button>
-                            </form>
+                            @can('edit-course')
+                                <a href="{{ route('courses.edit', ['course' => $course->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-md-0"><i class="fa-regular fa-pen-to-square"></i> Editar</a>
+                            @endcan
+
+                            @can('destroy-course')
+                                <form action="{{ route('courses.destroy', ['course' => $course->id]) }}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 mb-md-0" onclick="return confirm('Tem certeza que deseja EXCLUIR esse registro?')"><i class="fa-regular fa-trash-can"></i> Excluir</button>
+                                </form>
+                            @endcan
                         </td>
                       </tr>
 
