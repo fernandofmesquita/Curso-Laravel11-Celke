@@ -44,7 +44,7 @@ git clone --branch dev-master https://github.com/fernandofmesquita/Curso-Laravel
 
 Duplicar o arquivo ".env.exemplo" e renomear para ".env" e realizar as alterações.
 
-Realizar o cadastro do site [Mailtrap.io](https://mailtrap.io) 
+Para utilizar o serviço de recuperação de senha, deve-se  configurar o serviço de email. Para teste faça o cadastro do site [Mailtrap.io](https://mailtrap.io) 
 
 Pegar as credenciais da conta para o Laravel e realizar alterações no .env
 
@@ -142,7 +142,7 @@ php artisan config:clear
 
 ## LARAVEL-PERMISSION
 
-Associar usuários a funções e permissões. [Instalação em Laravel](https://spatie.be/docs/laravel-permission/v6/installation-laravel)
+Associar usuários a papéis e permissões. [Instalação em Laravel](https://spatie.be/docs/laravel-permission/v6/installation-laravel)
 
 ### Instalação
 Você pode instalar o pacote via composer :
@@ -196,7 +196,7 @@ if (!User::where('email', 'admin@admin.com')->first()){
             ]);
 
             // Atribuir papel para o usuário
-            $admin->assignRole('Super Admin');
+            $admin->assignRole('Admin');
 
         }
 ```
@@ -235,6 +235,7 @@ Criar a Seed
 php artisan make:seeder RoleSeeder
 ```
 
+Exemplo de Criação da Seed
 ```
 // Verifica se existe e senão existir, cadastra na tabela Roles o nome do papel
 if(!Role::where('name', 'Admin')->first()){
@@ -253,6 +254,22 @@ if(!Role::where('name', 'Admin')->first()){
 }
 ```
 
+### Definindo um superadministrador
+Se você deseja que uma função "Super Admin" responda a todas as permissões, sem precisar atribuir todas essas permissões a uma Papel, você pode usar o método do LaravelGate::before() . Por exemplo:
+
+app\Providers\AppServiceProvider.php
+```
+use Illuminate\Support\Facades\Gate;
+// ...
+public function boot()
+{
+    // Implicitly grant "Super Admin" role all permissions
+    // This works in the app by using gate-related functions like auth()->user->can() and @can()
+    Gate::before(function ($user, $ability) {
+        return $user->hasRole('Super Admin') ? true : null;
+    });
+}
+```
 
 ## Tradução do Projeto
 
