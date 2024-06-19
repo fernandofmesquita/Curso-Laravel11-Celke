@@ -140,6 +140,120 @@ Limpar cache de configuração (Somente se não funcionar)
 php artisan config:clear
 ```
 
+## LARAVEL-PERMISSION
+
+Associar usuários a funções e permissões. [Instalação em Laravel](https://spatie.be/docs/laravel-permission/v6/installation-laravel)
+
+### Instalação
+Você pode instalar o pacote via composer :
+```
+composer require spatie/laravel-permission
+```
+
+Você deve publicar a migração e o config/permission.php
+```
+php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+```
+
+Limpe seu cache de configuração . Este pacote requer acesso às permissionconfigurações para executar migrações. Se você estiver armazenando configurações em cache localmente, limpe o cache de configuração com um destes comandos:
+```
+php artisan config:clear
+```
+
+Execute as migrações : após a configuração e a migração terem sido publicadas e configuradas, você pode criar as tabelas para este pacote executando:
+```
+php artisan migrate
+```
+
+Adicione a característica necessária na Model User
+```
+use HasRoles;
+```
+
+### Será criado 5 tabelas no banco de dados
+* roles – Esta tabela armazenará o nome de todos os Papeis. 
+EX: Super Admin, Admin, Professor, Aluno...
+
+* permissions – Esta tabela armazenará o nome de todas as permissões do aplicativo. 
+Ex: 'index-course', 'show-course', 'create-course', 'edit-course', 'destroy-course'...
+
+* role_has_permissions  – Esta tabela armazenará todas as permissões atribuídas a cada Papel. 
+Ex: Papel 'Professor' tem Permissão a 'create-course'
+
+* model_has_roles  – Esta tabela armazenará Papéis atribuídos a cada usuário da Model User.
+Ex: Papel 'Professor' está atribuido ao Model User 'user_id = 1'
+
+* model_has_permissions  – Esta tabela armazenará as permissões atribuídas a cada modelo. Por exemplo, um modelo de usuário.
+
+### Criando usuário atraves da Seed e atribuindo o papel
+Exemplo de Criação da Seed
+```
+if (!User::where('email', 'admin@admin.com')->first()){
+            $admin = User::create([
+                'name' => 'Admin',
+                'email' => 'admin@admin.com',
+                'password' => Hash::make('123456', ['rounds' => 12])
+            ]);
+
+            // Atribuir papel para o usuário
+            $admin->assignRole('Super Admin');
+
+        }
+```
+
+### Criando Permissões através da seed
+Criar a Seed
+```
+php artisan make:seeder PermissionSeeder
+```
+
+Exemplo de Criação da Seed
+```
+$permissions = [
+    'index-course',
+    'show-course',
+    'create-course',
+    'edit-course',
+    'destroy-course',
+];
+
+foreach($permissions as $permission){
+    $existingPermission = Permission::where('name', $permission)->first();
+
+    if(!$existingPermission){
+        Permission::create([
+            'name' => $permission,
+            'guard_name' => 'web',
+        ]);
+    }
+}
+```
+
+### Criando Papel através da seed e atribuir as permissões
+Criar a Seed
+```
+php artisan make:seeder RoleSeeder
+```
+
+```
+// Verifica se existe e senão existir, cadastra na tabela Roles o nome do papel
+if(!Role::where('name', 'Admin')->first()){
+    $admin = Role::create([
+        'name' => 'Admin',
+    ]);
+
+    // Dar permissão para o papel e salva o relacionamento na tabela role_has_permissions
+    $admin->givePermissionTo([
+        'index-course',
+        'show-course',
+        'create-course',
+        'edit-course',
+        'destroy-course',
+    ]);
+}
+```
+
+
 ## Tradução do Projeto
 
 Utilizando a Tradução [Módulo de linguagem pt-BR (português brasileiro) para Laravel](https://github.com/lucascudo/laravel-pt-BR-localization).

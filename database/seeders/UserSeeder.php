@@ -14,48 +14,63 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        if (!User::where('email', 'superadmin@superadmin.com')->first()){
+            $superAdmin = User::create([
+                'name' => 'Super Admin',
+                'email' => 'superadmin@superadmin.com',
+                'password' => Hash::make('123456', ['rounds' => 12])
+            ]);
+
+            // Atribuir papel para o usuário
+            $superAdmin->assignRole('Super Admin');
+
+        }
+
         if (!User::where('email', 'admin@admin.com')->first()){
-            User::create([
+            $admin = User::create([
                 'name' => 'Admin',
                 'email' => 'admin@admin.com',
                 'password' => Hash::make('123456', ['rounds' => 12])
             ]);
 
-        }
-        
-        if (!User::where('email', 'maria@maria.com')->first()){
-            User::create([
-                'name' => 'Maria',
-                'email' => 'maria@maria.com',
-                'password' => Hash::make('123456', ['rounds' => 12])
-            ]);
+            // Atribuir papel para o usuário
+            $admin->assignRole('Admin');
 
         }
 
-        if (!User::where('email', 'joao@joao.com')->first()){
-            User::create([
-                'name' => 'João',
-                'email' => 'joao@joao.com',
+        if (!User::where('email', 'professor@professor.com')->first()){
+            $teacher = User::create([
+                'name' => 'Professor',
+                'email' => 'professor@professor.com',
                 'password' => Hash::make('123456', ['rounds' => 12])
             ]);
+
+            // Atribuir papel para o usuário
+            $teacher->assignRole('Professor');
 
         }
 
-        if (!User::where('email', 'marcos@marcos.com')->first()){
-            User::create([
-                'name' => 'Marcos',
-                'email' => 'marcos@marcos.com',
+        if (!User::where('email', 'tutor@tutor.com')->first()){
+            $tutor = User::create([
+                'name' => 'Tutor',
+                'email' => 'tutor@tutor.com',
                 'password' => Hash::make('123456', ['rounds' => 12])
             ]);
+
+            // Atribuir papel para o usuário
+            $tutor->assignRole('Tutor');
 
         }
 
-        if (!User::where('email', 'jose@jose.com')->first()){
-            User::create([
-                'name' => 'José',
-                'email' => 'jose@jose.com',
+        if (!User::where('email', 'aluno@aluno.com')->first()){
+            $student = User::create([
+                'name' => 'Aluno',
+                'email' => 'aluno@aluno.com',
                 'password' => Hash::make('123456', ['rounds' => 12])
             ]);
+
+            // Atribuir papel para o usuário
+            $student->assignRole('Aluno');
 
         }
     }
