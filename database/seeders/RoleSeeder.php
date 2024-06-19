@@ -25,6 +25,9 @@ class RoleSeeder extends Seeder
             $admin = Role::create([
                 'name' => 'Admin',
             ]);
+        } else {
+            $admin = Role::where('name', 'Admin')->first();
+        }
 
             // Dar permissão para o papel e salva o relacionamento na tabela role_has_permissions
             $admin->givePermissionTo([
@@ -33,14 +36,30 @@ class RoleSeeder extends Seeder
                 'create-course',
                 'edit-course',
                 'destroy-course',
+
+                'index-classe',
+                'show-classe',
+                'create-classe',
+                'edit-classe',
+                'destroy-classe',
+
+                'index-user',
+                'show-user',
+                'create-user',
+                'edit-user',
+                'editPassword-user',
+                'destroy-user',
             ]);
-        }
+        
         
         // Verifica se existe e senão existir, cadastra na tabela Roles o nome do papel
         if(!Role::where('name', 'Professor')->first()){
             $teacher = Role::create([
                 'name' => 'Professor',
             ]);
+        } else {
+            $teacher = Role::where('name', 'Professor')->first();
+        }
 
             // Dar permissão para o papel e salva o relacionamento na tabela role_has_permissions
             $teacher->givePermissionTo([
@@ -49,28 +68,53 @@ class RoleSeeder extends Seeder
                 'create-course',
                 'edit-course',
                 'destroy-course',
+
+                'index-classe',
+                'show-classe',
+                'create-classe',
+                'edit-classe',
+                'destroy-classe',
+
+                'index-user',
+                'show-user',
             ]);
-        }
+        
         
         // Verifica se existe e senão existir, cadastra na tabela Roles o nome do papel
         if(!Role::where('name', 'Tutor')->first()){
             $tutor = Role::create([
                 'name' => 'Tutor',
             ]);
+        } else {
+            $tutor = Role::where('name', 'Tutor')->first();
+        }
 
             // Dar permissão para o papel e salva o relacionamento na tabela role_has_permissions
             $tutor->givePermissionTo([
                 'index-course',
                 'show-course',
                 'edit-course',
+
+                'index-classe',
+                'show-classe',
+                'edit-classe',
+
+                'index-user',
+                
             ]);
-        }
+
+            $tutor->revokePermissionTo([
+                'index-user',
+            ]);
+        
         
         // Verifica se existe e senão existir, cadastra na tabela Roles o nome do papel
         if(!Role::where('name', 'Aluno')->first()){
             Role::create([
                 'name' => 'Aluno',
             ]);
+        } else {
+            $aluno = Role::where('name', 'Aluno')->first();
         }
     }
 

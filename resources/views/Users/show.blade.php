@@ -11,7 +11,9 @@
                 <a href="{{ route('dashboard.index') }}" class="text-decoration-none">Dashboard</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="{{ route('users.index') }}" class="text-decoration-none">Usuários</a>
+                @can('index-user')
+                    <a href="{{ route('users.index') }}" class="text-decoration-none">Usuários</a>
+                @endcan
             </li>
             <li class="breadcrumb-item active">Usuário</li>
         </ol>
@@ -20,14 +22,26 @@
         <div class="card-header hstack gap-2">
             <span>Visualizar Usuário</span>
             <span class="ms-auto d-sm-flex flex-row">
-                <a href="{{ route('users.index') }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0"><i class="fa-solid fa-list-ol"></i> Usuários</a>
-                <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-sm-0"><i class="fa-regular fa-pen-to-square"></i> Editar</a>
-                <a href="{{ route('users.edit-password', ['user' => $user->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-sm-0"><i class="fa-regular fa-pen-to-square"></i> Alterar Senha</a>
-                <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="POST" onclick="return confirm('Tem certeza que deseja EXCLUIR esse registro?')">
-                    @csrf
-                    @method('delete')
-                    <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 mb-sm-0"><i class="fa-regular fa-trash-can"></i> Excluir</button>
-                </form>
+            
+                @can('index-user')
+                    <a href="{{ route('users.index') }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0"><i class="fa-solid fa-list-ol"></i> Usuários</a>
+                @endcan
+
+                @can('edit-user')
+                    <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-md-0"><i class="fa-regular fa-pen-to-square"></i> Editar</a>
+                @endcan
+                
+                @can('editPassword-user')
+                    <a href="{{ route('users.edit-password', ['user' => $user->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-sm-0"><i class="fa-regular fa-pen-to-square"></i> Alterar Senha</a>
+                @endcan
+                
+                @can('destroy-user')
+                    <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="POST">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 mb-md-0" onclick="return confirm('Tem certeza que deseja EXCLUIR esse registro?')"><i class="fa-regular fa-trash-can"></i> Excluir</button>
+                    </form>
+                @endcan
             </span>
         </div>
 

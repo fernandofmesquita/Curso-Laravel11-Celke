@@ -39,15 +39,15 @@ Route::put('/update-profile', [ProfileController::class, 'update'])->name('profi
 Route::put('/update-password-profile', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
 
 // Usuário
-Route::get('/index-user', [UserController::class, 'index'])->name('users.index');
-Route::get('/show-user/{user}', [UserController::class, 'show'])->name('users.show');
-Route::get('/create-user', [UserController::class, 'create'])->name('users.create');
-Route::post('/store-user', [UserController::class, 'store'])->name('users.store');
-Route::get('/edit-user/{user}', [UserController::class, 'edit'])->name('users.edit');
-Route::get('/edit-password-user/{user}', [UserController::class, 'editPassword'])->name('users.edit-password');
-Route::put('/update-user/{user}', [UserController::class, 'update'])->name('users.update');
-Route::put('/update-password-user/{user}', [UserController::class, 'updatePassword'])->name('users.update-password');
-Route::delete('/destroy-user/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+Route::get('/index-user', [UserController::class, 'index'])->name('users.index')->middleware('permission:index-user');
+Route::get('/show-user/{user}', [UserController::class, 'show'])->name('users.show')->middleware('permission:show-user');
+Route::get('/create-user', [UserController::class, 'create'])->name('users.create')->middleware('permission:create-user');
+Route::post('/store-user', [UserController::class, 'store'])->name('users.store')->middleware('permission:create-user');
+Route::get('/edit-user/{user}', [UserController::class, 'edit'])->name('users.edit')->middleware('permission:edit-user');
+Route::get('/edit-password-user/{user}', [UserController::class, 'editPassword'])->name('users.edit-password')->middleware('permission:editPassword-user');
+Route::put('/update-user/{user}', [UserController::class, 'update'])->name('users.update')->middleware('permission:edit-user');
+Route::put('/update-password-user/{user}', [UserController::class, 'updatePassword'])->name('users.update-password')->middleware('permission:editPassword-user');
+Route::delete('/destroy-user/{user}', [UserController::class, 'destroy'])->name('users.destroy')->middleware('permission:destroy-user');
 
 
 // Cursos
@@ -61,12 +61,12 @@ Route::delete('/destroy-course/{course}', [CourseController::class, 'destroy'])-
 
 // Aulas
 
-Route::get('/index-classe/{course}', [ClasseController::class, 'index'])->name('classes.index');
-Route::get('/show-classe/{classe}', [ClasseController::class, 'show'])->name('classes.show');
-Route::get('/create-classe/{course}', [ClasseController::class, 'create'])->name('classes.create');
-Route::post('/store-classe', [ClasseController::class, 'store'])->name('classes.store');
-Route::get('/edit-classe/{classe}', [ClasseController::class, 'edit'])->name('classes.edit');
-Route::put('/update-classe/{classe}', [ClasseController::class, 'update'])->name('classes.update');
-Route::delete('/destroy-classe/{classe}', [ClasseController::class, 'destroy'])->name('classes.destroy');
+Route::get('/index-classe/{course}', [ClasseController::class, 'index'])->name('classes.index')->middleware('permission:index-classe');
+Route::get('/show-classe/{classe}', [ClasseController::class, 'show'])->name('classes.show')->middleware('permission:show-classe');
+Route::get('/create-classe/{course}', [ClasseController::class, 'create'])->name('classes.create')->middleware('permission:create-classe');
+Route::post('/store-classe', [ClasseController::class, 'store'])->name('classes.store')->middleware('permission:create-classe');
+Route::get('/edit-classe/{classe}', [ClasseController::class, 'edit'])->name('classes.edit')->middleware('permission:edit-classe');
+Route::put('/update-classe/{classe}', [ClasseController::class, 'update'])->name('classes.update')->middleware('permission:edit-classe');
+Route::delete('/destroy-classe/{classe}', [ClasseController::class, 'destroy'])->name('classes.destroy')->middleware('permission:destroy-classe');
 
 });

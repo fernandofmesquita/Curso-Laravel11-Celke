@@ -11,10 +11,14 @@
                 <a href="{{ route('dashboard.index') }}" class="text-decoration-none">Dashboard</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="{{ route('courses.index') }}" class="text-decoration-none">Cursos</a>
+                @can('index-course')
+                    <a href="{{ route('courses.index') }}" class="text-decoration-none">Cursos</a>
+                @endcan
             </li>
             <li class="breadcrumb-item">
-                <a href="{{ route('classes.index', ['course' => $classe->course_id]) }}" class="text-decoration-none">Aulas</a>
+                @can('index-classe')
+                    <a href="{{ route('classes.index', ['course' => $classe->course_id]) }}" class="text-decoration-none">Aulas</a>
+                @endcan
             </li>
             <li class="breadcrumb-item active">Aula</li>
         </ol>
@@ -23,8 +27,14 @@
         <div class="card-header hstack gap-2">
             <span>Editar Aula</span>
             <span class="ms-auto d-sm-flex flex-row">
-                <a href="{{ route('classes.index', ['course' => $classe->course_id]) }}" class="btn btn-info btn-sm me-1 mb-1 mb-ms-0"><i class="fa-solid fa-list-ol"></i> Aulas</a>
-                <a href="{{ route('classes.show', ['classe' => $classe->id]) }}" class="btn btn-primary btn-sm me-1 mb-1 mb-ms-0"><i class="fa-regular fa-eye"></i> Visualizar</a>
+                
+                @can('index-classe')
+                    <a href="{{ route('classes.index', ['course' => $classe->course_id]) }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0"><i class="fa-solid fa-list-ol"></i> Aulas</a>
+                @endcan
+
+                @can('show-classe')
+                    <a href="{{ route('classes.show', ['classe' => $classe->id]) }}" class="btn btn-primary btn-sm me-1 mb-1 mb-md-0"><i class="fa-regular fa-eye"></i> Visualizar</a>
+                @endcan
             </span>
         </div>
 

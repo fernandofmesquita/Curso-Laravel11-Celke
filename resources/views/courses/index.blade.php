@@ -46,7 +46,7 @@
                         <td class="d-none d-md-table-cell text-center">{{ 'R$ '. number_format($course->price, 2, ',', '.') }}</td>
                         <td class="d-md-flex flex-row justify-content-center">
                             
-                            @can('index-classes')
+                            @can('index-classe')
                                <a href="{{ route('classes.index', ['course' => $course->id]) }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0"><i class="fa-solid fa-list-ol"></i> Aulas</a>
                             @endcan
                             
