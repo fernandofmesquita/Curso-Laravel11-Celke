@@ -49,7 +49,21 @@
 
                 <div class="col-md-12">
                     <label for="password" class="form-label">Nova Senha: </label>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Digite a nova senha do Usuário" required>
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" placeholder="Digite a nova senha do Usuário" required>
+                    @error('password')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+                </div>
+                <div class="col-md-12">
+                    <label for="password_confirmation" class="form-label">Confirmação de password</label>
+                    <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirme a Senha do Usuário" class="form-control @error('password_confirmation') is-invalid @enderror">
+                    @error('password_confirmation')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
         </div>
         <div class="card-footer">

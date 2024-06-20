@@ -39,13 +39,22 @@
                 @method('POST')
 
                 <div class="col-md-12">
-                    <label for="name" class="form-label">Nome: </label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Digite o nome do curso" value="{{ old('name') }}" required>
+                    <label for="name" class="form-label">Nome:</label>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}">
+                    @error('name')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
+
                 <div class="col-md-12">
                     <label for="price" class="form-label">Preço: </label>
-                    <input type="text" class="form-control" name="price" id="price" placeholder="Digite o preço do curso" value="{{ old('price') }}" required>
+                    <input type="text" class="form-control @error('price') is-invalid @enderror" name="price" id="price" placeholder="Digite o preço do curso" value="{{ old('price') }}">
+                    @error('price')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
+
+                
         </div>
         
         <div class="card-footer">

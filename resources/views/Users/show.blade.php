@@ -59,6 +59,15 @@
                 <dt class="col-sm-2">E-mail: </dt>
                 <dd class="col-sm-10">{{ $user->email }}</dd>
 
+                <dt class="col-sm-2">Papel: </dt>
+                <dd class="col-sm-10">
+                    @forelse ($user->getRoleNames() as $role)
+                        {{ $role }}
+                    @empty
+                        {{ "-" }}
+                    @endforelse
+                </dd>
+
                 <dt class="col-sm-2">Cadastrado: </dt>
                 <dd class="col-sm-10">{{ \Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:i:s') }}</dd>
 

@@ -79,6 +79,9 @@ class LoginController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password, ['rounds' => 12]),
                 ]);
+
+                // Cadastra Papel do Usuário
+                $user->assignRole("Aluno");
                 
                 // Confirma a transação
                 DB::commit();

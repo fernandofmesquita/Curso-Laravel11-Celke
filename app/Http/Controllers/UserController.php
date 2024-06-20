@@ -6,9 +6,11 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -17,6 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        //Recupera a Lista de Usuários Cadastrados
         $users = User::orderBy('id', 'ASC')->get();
 
         return view('users.index', ['menu' => 'users', 'users' => $users]);
@@ -27,8 +30,11 @@ class UserController extends Controller
      */
     public function create()
     {
+        // Recuperar a Lista de Papéis
+        $roles = Role::pluck('name')->all();
+        
         // Carregar a View
-        return view('users.create', ['menu' => 'users']);
+        return view('users.create', ['menu' => 'users', 'roles' => $roles]);
     }
 
     /**
@@ -50,12 +56,15 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password, ['rounds' => 12]),
             ]);
+
+            // Atribui o Papel ao Usuário
+            $user->assignRole($request->roles);
             
             // Confirma a transação
             DB::commit();
 
             // Registrar no Log
-            Log::info('Usuário Cadastrado', ['user_id' => $user->id ]);
+            Log::info('Usuário Cadastrado', ['user_id' => $user->id, 'action_user_id' => Auth::id() ]);
 
             return redirect()->route('users.show', ['user' => $user->id])
             ->with('success', 'Usuário cadastrado com sucesso');
@@ -66,7 +75,7 @@ class UserController extends Controller
             DB::rollBack();
 
             // Registrar no Log
-            Log::notice('Usuário não Cadastrado', ['error' => $e->getMessage()]);
+            Log::notice('Usuário não Cadastrado', ['action_user_id' => Auth::id(), 'error' => $e->getMessage()]);
 
             return back()->withInput()->with('error', 'Usuário não foi cadastrado');
 
@@ -86,7 +95,13 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit', ['menu' => 'users', 'user' => $user]);
+        // Recuperar a Lista de Papéis
+        $roles = Role::pluck('name')->all();
+
+        // Recupera o Papel do usuário
+        $userRoles = $user->roles->pluck('name')->first();
+        
+        return view('users.edit', ['menu' => 'users', 'user' => $user, 'roles' => $roles, 'userRoles' => $userRoles]);
     }
 
      /**
@@ -109,15 +124,18 @@ class UserController extends Controller
                 'email' => $request->email,
             ]);
 
+            // Editar papel do Usuário
+            $user->syncRoles($request->roles);
+
             // Confirma a transação
             DB::commit();
 
             // Registrar no Log
-            Log::info('Senha do Usuário Editada', ['user_id' => $user->id ]);
+            Log::info('Usuário Editado', ['user_id' => $user->id, 'action_user_id' => Auth::id() ]);
 
             // Carregar a View
             return redirect()->route('users.show', ['user' => $user->id])
-            ->with('success', 'Senha do Usuário Editada com sucesso');  
+            ->with('success', 'Usuário Editado com sucesso');  
             
         } catch (Exception $e){
 
@@ -145,7 +163,7 @@ class UserController extends Controller
         // Validar o formulário
         $request->validate(
         [
-            'password' => 'required|min:6',
+            'password' => 'required|min:6|confirmed',
         ], 
         [
             'password.required' => 'O campo senha é obrigatório.',
@@ -166,7 +184,7 @@ class UserController extends Controller
             DB::commit();
 
             // Registrar no Log
-            Log::info('Senha do Usuário Editada', ['user_id' => $user->id ]);
+            Log::info('Senha do Usuário Editada', ['user_id' => $user->id, 'action_user_id' => Auth::id() ]);
 
             // Carregar a View
             return redirect()->route('users.show', ['user' => $user->id])
@@ -178,7 +196,7 @@ class UserController extends Controller
             DB::rollBack();
 
             // Registrar no Log
-            Log::notice('Senha do Usuário não foi Editada', ['user_id' => $user->id, 'error' => $e->getMessage()]);
+            Log::notice('Senha do Usuário não foi Editada', ['user_id' => $user->id, 'action_user_id' => Auth::id(), 'error' => $e->getMessage()]);
 
             return back()->withInput()->with('error', 'Senha do Usuário não foi Editada');
 
@@ -196,6 +214,10 @@ class UserController extends Controller
 
         // Tenta excluir no Banco de Dados
         try {
+
+            //Remover Papeis atribuidos ao usuário
+            $user->syncRoles([]);
+
             // Excluir o registro
             $user->delete();
 
@@ -203,7 +225,7 @@ class UserController extends Controller
             DB::commit();
 
             // Registrar no Log
-            Log::info('Usuário Deletado', ['user_id' => $user->id ]);
+            Log::info('Usuário Deletado', ['user_id' => $user->id, 'action_user_id' => Auth::id() ]);
 
             // Carregar a View
             return redirect()->route('users.index')
@@ -215,7 +237,7 @@ class UserController extends Controller
             DB::rollBack();
 
             // Registrar no Log
-            Log::notice('Usuário não Deletado', ['user_id' => $user->id, 'error' => $e->getMessage()]);
+            Log::notice('Usuário não Deletado', ['user_id' => $user->id,  'action_user_id' => Auth::id(), 'error' => $e->getMessage()]);
             
             $errorCod = $e->getCode();
             return redirect()->route('users.index')

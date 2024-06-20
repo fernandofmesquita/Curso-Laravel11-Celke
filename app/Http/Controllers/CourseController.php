@@ -6,6 +6,7 @@ use App\Http\Requests\CourseRequest;
 use App\Models\Course;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -66,7 +67,7 @@ class CourseController extends Controller
             DB::commit();
 
             // Registrar no Log
-            Log::info('Curso Cadastrado', ['course_id' => $course->id ]);
+            Log::info('Curso Cadastrado', ['course_id' => $course->id, 'action_user_id' => Auth::id(), ]);
 
             return redirect()->route('courses.show', ['course' => $course->id])
             ->with('success', 'Curso cadastrado com sucesso');
@@ -77,7 +78,7 @@ class CourseController extends Controller
             DB::rollBack();
 
             // Registrar no Log
-            Log::notice('Curso não Cadastrado', ['error' => $e->getMessage()]);
+            Log::notice('Curso não Cadastrado', ['action_user_id' => Auth::id(),'error' => $e->getMessage()]);
 
             return back()->withInput()->with('error', 'Curso não foi cadastrado');
 
@@ -115,7 +116,7 @@ class CourseController extends Controller
             DB::commit();
 
             // Registrar no Log
-            Log::info('Curso Editado', ['course_id' => $course->id ]);
+            Log::info('Curso Editado', ['course_id' => $course->id , 'action_user_id' => Auth::id() ]);
 
             // Carregar a View
             return redirect()->route('courses.show', ['course' => $course->id])
@@ -127,7 +128,7 @@ class CourseController extends Controller
             DB::rollBack();
 
             // Registrar no Log
-            Log::notice('Curso não Editado', ['course_id' => $course->id, 'error' => $e->getMessage()]);
+            Log::notice('Curso não Editado', ['course_id' => $course->id, 'action_user_id' => Auth::id(), 'error' => $e->getMessage()]);
 
             return back()->withInput()->with('error', 'Curso não foi Editado');
 
@@ -151,7 +152,7 @@ class CourseController extends Controller
             DB::commit();
 
             // Registrar no Log
-            Log::info('Curso Deletado', ['course_id' => $course->id ]);
+            Log::info('Curso Deletado', ['course_id' => $course->id, 'action_user_id' => Auth::id() ]);
 
             // Carregar a View
             return redirect()->route('courses.index')
@@ -163,7 +164,7 @@ class CourseController extends Controller
             DB::rollBack();
 
             // Registrar no Log
-            Log::notice('Curso não Deletado', ['course_id' => $course->id, 'error' => $e->getMessage()]);
+            Log::notice('Curso não Deletado', ['course_id' => $course->id, 'action_user_id' => Auth::id(), 'error' => $e->getMessage()]);
             
             $errorCod = $e->getCode();
             return redirect()->route('courses.index')

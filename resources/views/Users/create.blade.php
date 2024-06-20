@@ -42,15 +42,60 @@
 
                 <div class="col-md-12">
                     <label for="name" class="form-label">Nome: </label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Digite o nome do Usuário" value="{{ old('name') }}" required>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Digite o nome do Usuário" value="{{ old('name') }}">
+                    @error('name')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
                 <div class="col-md-12">
                     <label for="email" class="form-label">E-mail: </label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Digite o E-mail do Usuário" value="{{ old('email') }}" required>
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="Digite o E-mail do Usuário" value="{{ old('email') }}">
+                    @error('email')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
                 <div class="col-md-12">
                     <label for="password" class="form-label">Senha: </label>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Digite o Senha do Usuário" value="{{ old('password') }}" required>
+                    <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" placeholder="Digite o Senha do Usuário" value="{{ old('password') }}">
+                    @error('password')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="col-md-12">
+                    <label for="password_confirmation" class="form-label">Confirmação de password</label>
+                    <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirme a Senha do Usuário" value="{{ old('password_confirmation') }}" class="form-control @error('password_confirmation') is-invalid @enderror">
+                    @error('password_confirmation')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="col-md-12">
+                    <label for="roles" class="form-label @error('roles') is-invalid @enderror">Papel: </label>
+                    <select name="roles" id="roles" class="form-select">
+                        <option value="">Selecione</option>
+                        @forelse ($roles as $role)
+                            @if ($role != 'Super Admin')
+                                <option {{ old('roles') == $role ? 'selected' : '' }} value="{{ $role }}">{{ $role }}</option>
+                            @else
+                                @if (Auth::user()->hasRole('Super Admin'))
+                                    <option {{ old('roles') == $role ? 'selected' : '' }} value="{{ $role }}">{{ $role }}</option>                                    
+                                @endif
+                            @endif
+                        @empty
+                        @endforelse
+                    </select>
+                    @error('roles')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
         </div>
         

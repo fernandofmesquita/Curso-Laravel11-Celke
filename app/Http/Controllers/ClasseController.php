@@ -7,6 +7,7 @@ use App\Models\Classe;
 use App\Models\Course;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -62,7 +63,7 @@ class ClasseController extends Controller
             DB::commit();
             
             // Registrar no Log
-            Log::info('Aula Cadastrada', ['classe_id' => $classe->id, 'course_id'=> $classe->course_id ]);
+            Log::info('Aula Cadastrada', ['classe_id' => $classe->id, 'course_id'=> $classe->course_id, 'action_user_id' => Auth::id() ]);
 
             // Carrega a view show da aula especificada
             return redirect()->route('classes.show', ['classe' => $classe->id])
@@ -74,7 +75,7 @@ class ClasseController extends Controller
             DB::rollBack();
 
             // Registrar no Log
-            Log::notice('Aula não Cadastrada', ['error' => $e->getMessage() ]);
+            Log::notice('Aula não Cadastrada', ['action_user_id' => Auth::id(),'error' => $e->getMessage() ]);
 
             return back()->withInput()->with('error', 'Não foi possível cadastrar a Aula');
 
@@ -111,7 +112,7 @@ class ClasseController extends Controller
             DB::commit();
 
             // Registrar no Log
-            Log::info('Aula Editada', ['classe_id' => $classe->id, 'course_id'=> $classe->course_id ]);
+            Log::info('Aula Editada', ['classe_id' => $classe->id, 'course_id'=> $classe->course_id, 'action_user_id' => Auth::id() ]);
 
             // Carrega a view show da aula especificada
             return redirect()->route('classes.show', ['classe' => $classe->id])
@@ -127,7 +128,8 @@ class ClasseController extends Controller
             Log::notice('Aula não Cadastrada', [
                 'classe_id' => $classe->id, 
                 'course_id'=> $classe->course_id, 
-                'error' => $e->getMessage() ]);
+                'error' => $e->getMessage(), 
+                'action_user_id' => Auth::id() ]);
 
             return back()->withInput()->with('error', 'Não foi possível cadastrar a Aula');
 
@@ -156,7 +158,7 @@ class ClasseController extends Controller
             DB::commit();
 
             // Registrar no Log
-            Log::info('Aula Deletada', ['classe_id' => $classe->id, 'course_id'=> $classe->course_id ]);
+            Log::info('Aula Deletada', ['classe_id' => $classe->id, 'course_id'=> $classe->course_id, 'action_user_id' => Auth::id() ]);
 
             // Retorna para a lista de Aulas do Curso
             return redirect()->route('classes.index', ['course' => $classe->course_id])
@@ -171,7 +173,8 @@ class ClasseController extends Controller
             Log::notice('Aula não Deletada', [
                 'classe_id' => $classe->id, 
                 'course_id'=> $classe->course_id, 
-                'error' => $e->getMessage() ]);
+                'error' => $e->getMessage(), 
+                'action_user_id' => Auth::id() ]);
 
             // Pega o codigo do erro
             $errorCod = $e->getCode();

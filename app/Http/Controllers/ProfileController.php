@@ -64,7 +64,7 @@ class ProfileController extends Controller
             DB::commit();
 
             // Registrar no Log
-            Log::info('Perfil Editado', ['user_id' => $user->id]);
+            Log::info('Perfil Editado', ['user_id' => $user->id, 'action_user_id' => Auth::id()]);
 
             // Carregar a View
             return redirect()->route('profile.show')
@@ -76,7 +76,7 @@ class ProfileController extends Controller
             DB::rollBack();
 
             // Registrar no Log
-            Log::notice('Perfil não Editado', ['user_id' => $user->id, 'error' => $e->getMessage()]);
+            Log::notice('Perfil não Editado', ['user_id' => $user->id, 'action_user_id' => Auth::id(), 'error' => $e->getMessage()]);
 
             return back()->withInput()->with('error', 'Perfil não foi Editado');
 
@@ -121,7 +121,7 @@ class ProfileController extends Controller
             DB::commit();
 
             // Registrar no Log
-            Log::info('Senha do Perfil Editada', ['user_id' => $user->id ]);
+            Log::info('Senha do Perfil Editada', ['user_id' => $user->id, 'action_user_id' => Auth::id() ]);
 
             // Carregar a View
             return redirect()->route('profile.show', ['user' => $user->id])
@@ -133,7 +133,7 @@ class ProfileController extends Controller
             DB::rollBack();
 
             // Registrar no Log
-            Log::notice('Senha do Perfil não foi Editada', ['user_id' => $user->id, 'error' => $e->getMessage()]);
+            Log::notice('Senha do Perfil não foi Editada', ['user_id' => $user->id, 'action_user_id' => Auth::id(), 'error' => $e->getMessage()]);
 
             return back()->withInput()->with('error', 'Senha do Perfil não foi Editada');
 

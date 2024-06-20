@@ -49,11 +49,42 @@
 
                 <div class="col-md-12">
                     <label for="name" class="form-label">Nome: </label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Digite o nome do Usuário" value="{{ old('name', $user->name) }}" required>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Digite o nome do Usuário" value="{{ old('name', $user->name) }}">
+                    @error('name')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
                 <div class="col-md-12">
                     <label for="email" class="form-label">E-mail: </label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Digite o e-mail do Usuário" value="{{ old('email', $user->email) }}" required>
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="Digite o e-mail do Usuário" value="{{ old('email', $user->email) }}">
+                    @error('email')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="col-md-12">
+                    <label for="roles" class="form-label @error('roles') is-invalid @enderror">Papel: </label>
+                    <select name="roles" id="roles" class="form-select">
+                        <option value="">Selecione</option>
+                        @forelse ($roles as $role)
+                            @if ($role != 'Super Admin')
+                                <option {{ old('roles', $userRoles) == $role ? 'selected' : '' }} value="{{ $role }}">{{ $role }}</option>
+                            @else
+                                @if (Auth::user()->hasRole('Super Admin'))
+                                    <option {{ old('roles', $userRoles) == $role ? 'selected' : '' }} value="{{ $role }}">{{ $role }}</option>                                    
+                                @endif
+                            @endif
+                        @empty
+                        @endforelse
+                    </select>
+                    @error('roles')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
         </div>
         <div class="card-footer">
