@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -68,5 +69,11 @@ Route::post('/store-classe', [ClasseController::class, 'store'])->name('classes.
 Route::get('/edit-classe/{classe}', [ClasseController::class, 'edit'])->name('classes.edit')->middleware('permission:edit-classe');
 Route::put('/update-classe/{classe}', [ClasseController::class, 'update'])->name('classes.update')->middleware('permission:edit-classe');
 Route::delete('/destroy-classe/{classe}', [ClasseController::class, 'destroy'])->name('classes.destroy')->middleware('permission:destroy-classe');
+
+// Roles
+Route::get('/index-role', [RoleController::class, 'index'])->name('roles.index')->middleware('permission:index-role');
+Route::post('/store-role', [RoleController::class, 'store'])->name('roles.store')->middleware('permission:store-role');
+Route::put('/update-role/{role}', [RoleController::class, 'update'])->name('roles.update')->middleware('permission:update-role');
+Route::delete('/destroy-role/{role}', [RoleController::class, 'destroy'])->name('roles.destroy')->middleware('permission:destroy-role');
 
 });

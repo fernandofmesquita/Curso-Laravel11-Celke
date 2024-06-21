@@ -49,6 +49,16 @@ class RoleSeeder extends Seeder
                 'edit-user',
                 'editPassword-user',
                 'destroy-user',
+
+                'index-role',
+                'store-role',
+                'update-role',
+                
+            ]);
+
+            $admin->revokePermissionTo([
+                'store-role',
+                'update-role',
             ]);
         
         

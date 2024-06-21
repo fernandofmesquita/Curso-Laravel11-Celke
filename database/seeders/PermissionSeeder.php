@@ -33,6 +33,11 @@ class PermissionSeeder extends Seeder
             'editPassword-user',
             'destroy-user',
 
+            'index-role',
+            'store-role',
+            'update-role',
+            'destroy-role',
+
         ];
 
         foreach($permissions as $permission){
