@@ -39,5 +39,50 @@ class RolePermissionController extends Controller
 
         ]);
     }
+
+
+    // Editar a permissão de acesso a página para o papel
+    public function update(Request $request, Role $role)
+    {
+
+        // Obter a permissão específica com base no ID fornecido em $request->permission
+        $permission = Permission::find($request->permission);
+
+        // Verificar se a permissão foi encontrada
+        if(!$permission){
+
+            // Salvar log
+            Log::info('Permissão não encontrada.', ['role' => $role->id, 'permission' => $request->permission, 'action_user_id' => Auth::id()]);
+
+            // Redirecionar o usuário, enviar a mensagem de erro
+            return redirect()->route('role-permissions.index', ['role' => $role->id])->with('error', 'Permissão não encontrada!');
+
+        }
+
+        // Verificar se a permissão já está associada ao papel
+        if($role->permissions->contains($permission)){
+
+            // Remover a permissão do papel (bloquear)
+            $role->revokePermissionTo($permission);
+
+            // Salvar log
+            Log::info('Bloquear permissão para o papel.', ['action_user_id' => Auth::id(), 'permissao' => $request->permission]);
+    
+            // Redirecionar o usuário, enviar a mensagem de sucesso
+            return redirect()->route('role-permissions.index', ['role' => $role->id])->with('success', "Permissão bloqueada com sucesso!");
+        }else{
+
+            // Adicionar a permissão ao papel (liberar)
+            $role->givePermissionTo($permission);
+
+            // Salvar log
+            Log::info('Liberar permissão para o papel.', ['action_user_id' => Auth::id(), 'permissao' => $request->permission]);
+    
+            // Redirecionar o usuário, enviar a mensagem de sucesso
+            return redirect()->route('role-permissions.index', ['role' => $role->id])->with('success', "Permissão liberada com sucesso!");
+
+        }
+
+    }
         
 }

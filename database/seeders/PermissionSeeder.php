@@ -39,6 +39,13 @@ class PermissionSeeder extends Seeder
             ['title' => 'Apagar Papel', 'name' => 'destroy-role'],
 
             ['title' => 'Listar Permissões', 'name' => 'index-role-permission'],
+            ['title' => 'Editar Permissões', 'name' => 'update-role-permission'],
+
+            ['title'=> 'Listar páginas', 'name' => 'index-permission'],
+            ['title'=> 'Visualizar página', 'name' => 'show-permission'],
+            ['title'=> 'Cadastrar página', 'name' => 'create-permission'],
+            ['title'=> 'Editar página', 'name' => 'edit-permission'],
+            ['title'=> 'Apagar página', 'name' => 'destroy-permission'],
 
         ];
 

@@ -55,6 +55,7 @@ class RoleSeeder extends Seeder
                 'update-role',
 
                 'index-role-permission',
+                'update-role-permission',
                 
             ]);
 
