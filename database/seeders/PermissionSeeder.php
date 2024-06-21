@@ -14,40 +14,41 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            'index-course',
-            'show-course',
-            'create-course',
-            'edit-course',
-            'destroy-course',
+            ['title' => 'Listar Cursos', 'name' => 'index-course'],
+            ['title' => 'Visualizar Curso', 'name' => 'show-course'],
+            ['title' => 'Cadastrar Curso ', 'name' => 'create-course'],
+            ['title' => 'Editar Curso', 'name' => 'edit-course'],
+            ['title' => 'Apagar Curso', 'name' => 'destroy-course'],
 
-            'index-classe',
-            'show-classe',
-            'create-classe',
-            'edit-classe',
-            'destroy-classe',
+            ['title' => 'Listar Aulas', 'name' => 'index-classe'],
+            ['title' => 'Visualizar Aula', 'name' => 'show-classe'],
+            ['title' => 'Cadastrar Aula', 'name' => 'create-classe'],
+            ['title' => 'Editar Aula', 'name' => 'edit-classe'],
+            ['title' => 'Apagar Aula', 'name' => 'destroy-classe'],
 
-            'index-user',
-            'show-user',
-            'create-user',
-            'edit-user',
-            'editPassword-user',
-            'destroy-user',
+            ['title' => 'Listar Usuários', 'name' => 'index-user'],
+            ['title' => 'Visualizar Usuário', 'name' => 'show-user'],
+            ['title' => 'Cadastrar Usuário', 'name' => 'create-user'],
+            ['title' => 'Editar Usuário', 'name' => 'edit-user'],
+            ['title' => 'Editar senha do Usuário', 'name' => 'editPassword-user'],
+            ['title' => 'Apagar Usuário', 'name' => 'destroy-user'],
 
-            'index-role',
-            'store-role',
-            'update-role',
-            'destroy-role',
+            ['title' => 'Listar Papeis', 'name' => 'index-role'],
+            ['title' => 'Cadastrar Papel', 'name' => 'store-role'],
+            ['title' => 'Editar Papel', 'name' => 'update-role'],
+            ['title' => 'Apagar Papel', 'name' => 'destroy-role'],
 
-            'index-role-permission',
+            ['title' => 'Listar Permissões', 'name' => 'index-role-permission'],
 
         ];
 
         foreach($permissions as $permission){
-            $existingPermission = Permission::where('name', $permission)->first();
+            $existingPermission = Permission::where('name', $permission['name'])->first();
 
             if(!$existingPermission){
                 Permission::create([
-                    'name' => $permission,
+                    'title' => $permission['title'],
+                    'name' => $permission['name'],
                     'guard_name' => 'web',
                 ]);
             }

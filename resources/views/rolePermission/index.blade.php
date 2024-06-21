@@ -35,6 +35,7 @@
                     <tr>
                         <th class="d-none d-sm-table-cell text-center">ID</th>
                         <th>Name</th>
+                        <th class="d-none d-sm-table-cell text-center">Permissão</th>
                         <th class="text-center">Ações</th>
                     </tr>
                 </thead>
@@ -43,9 +44,9 @@
                    @forelse ($permissions as $permission)
                     <tr>
                         <th class="d-none d-sm-table-cell text-center">{{ $permission->id }}</th>
-                        <td>{{ $permission->name }}</td>
-                        
-                        <td>
+                        <td>{{ $permission->title }}</td>
+                        <td class="d-none d-sm-table-cell text-center">{{ $permission->name }}</td>
+                        <td class="text-center">
                             @if (in_array($permission->id, $rolePermissions ?? []))
                                 <span class="badge text-bg-success">Liberado</span>
                             @else
