@@ -53,6 +53,8 @@ class RoleSeeder extends Seeder
                 'index-role',
                 'store-role',
                 'update-role',
+
+                'index-role-permission',
                 
             ]);
 

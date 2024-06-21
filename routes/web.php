@@ -7,6 +7,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -61,7 +62,6 @@ Route::put('/update-course/{course}', [CourseController::class, 'update'])->name
 Route::delete('/destroy-course/{course}', [CourseController::class, 'destroy'])->name('courses.destroy')->middleware('permission:destroy-course');
 
 // Aulas
-
 Route::get('/index-classe/{course}', [ClasseController::class, 'index'])->name('classes.index')->middleware('permission:index-classe');
 Route::get('/show-classe/{classe}', [ClasseController::class, 'show'])->name('classes.show')->middleware('permission:show-classe');
 Route::get('/create-classe/{course}', [ClasseController::class, 'create'])->name('classes.create')->middleware('permission:create-classe');
@@ -75,5 +75,8 @@ Route::get('/index-role', [RoleController::class, 'index'])->name('roles.index')
 Route::post('/store-role', [RoleController::class, 'store'])->name('roles.store')->middleware('permission:store-role');
 Route::put('/update-role/{role}', [RoleController::class, 'update'])->name('roles.update')->middleware('permission:update-role');
 Route::delete('/destroy-role/{role}', [RoleController::class, 'destroy'])->name('roles.destroy')->middleware('permission:destroy-role');
+
+// Permissions
+Route::get('/index-role-permission/{role}', [RolePermissionController::class, 'index'])->name('role-permissions.index')->middleware('permission:index-role-permission');
 
 });

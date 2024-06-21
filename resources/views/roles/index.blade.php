@@ -45,8 +45,8 @@
                         <td>{{ $role->name }}</td>
                         
                         <td class="d-md-flex flex-row justify-content-center">
-                            @can('index-classe')
-                               <a href="#" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0"><i class="fa-solid fa-list-ol"></i> Permissões</a>
+                            @can('index-role-permission')
+                               <a href="{{ route('role-permissions.index', ['role' => $role->id])}}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0"><i class="fa-solid fa-list-ol"></i> Permissões</a>
                             @endcan
                                                         
                             @can('update-role')
