@@ -2,10 +2,11 @@
 
 ## Requisitos
 
-* PHP 8.2+ | Apache 2.4+ | phpMyAdmin 5.2+ ( [XAMPP](https://www.apachefriends.org) )
+* PHP 8.2+ | Apache 2.4+ | phpMyAdmin 5.2+ ( [Laragon](https://laragon.org/download/) )
 * Composer [Download](https://getcomposer.org) 
 * Node.js 20 ou superior [Download](https://nodejs.org) 
-* GIT [Download](https://www.git-scm.com) 
+* GIT [Download](https://www.git-scm.com)
+* VS Code [Download](https://code.visualstudio.com/download)
 
 
 ## Sequencia para criar o projeto
@@ -19,6 +20,25 @@ mkdir meu-projeto && cd meu-projeto
 Criar o projeto com o Laravel
 ```
 composer create-project laravel/laravel .
+```
+
+Configurar as variavéis essenciais do arquivo .env 
+```
+APP_NAME=Curso-Laravel
+
+APP_TIMEZONE=America/Fortaleza
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=curso-laravel
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Criar banco de dados e as tabelas
+```
+php artisan migrate
 ```
 
 Inciar o projeto criado com Laravel
@@ -54,7 +74,7 @@ EXEMPLO
 MAIL_MAILER=smtp
 MAIL_HOST=sandbox.smtp.mailtrap.io
 MAIL_PORT=2525
-MAIL_USERNAME=7a236985532b32
+MAIL_USERNAME=********5532b32
 MAIL_PASSWORD=********ea1f
 MAIL_ENCRYPTION=null
 MAIL_FROM_ADDRESS="sac@cursolaravel.com"
@@ -95,6 +115,7 @@ Executar as dependencias Node.JS
 ```
 npm rum dev
 ```
+
 
 
 ## Instalar o Laravel Auditing
@@ -254,6 +275,18 @@ if(!Role::where('name', 'Admin')->first()){
 }
 ```
 
+### Configure a Middleware no arquivo bootstrap\app.php
+```
+->withMiddleware(function (Middleware $middleware) {
+        $middleware->redirectGuestsTo('/');
+        $middleware->alias([
+            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+        ]);
+    })
+```
+
 ### Definindo um superadministrador
 Se você deseja que uma função "Super Admin" responda a todas as permissões, sem precisar atribuir todas essas permissões a uma Papel, você pode usar o método do LaravelGate::before() . Por exemplo:
 
@@ -333,6 +366,130 @@ Instalar a Biblioteca de Icones Free
 npm i --save @fortawesome/fontawesome-free
 ```
 
+## Instalar Biblioteca jQuery 
+
+Biblioteca JavaScript [jQuery](https://jquery.com/download/)
+
+Instalar a Biblioteca de Icones Free
+
+```
+npm install jquery
+```
+
+No arquivo resources\js\bootstrap.js inclua:
+```
+import jQuery from 'jquery';
+window.$ = jQuery;
+window.jQuery = jQuery;
+```
+
+No arquivo vite.config.js inclua:
+```
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+
+export default defineConfig({
+    plugins: [
+        laravel({
+            input: ['resources/css/app.css', 'resources/js/app.js'],
+            refresh: true,
+        }),
+    ],
+    resolve: {
+        alias: {
+            '$':  'jquery',
+        },
+    },
+});
+```
+
+## Instalar Biblioteca SweetAlert 2
+SweetAlert 2 [Download](https://sweetalert2.github.io/)
+
+Instalar
+```
+npm install sweetalert2
+```
+
+No arquivo resources\js\bootstrap.js inclua:
+
+```
+import Swal from 'sweetalert2';
+window.Swal = Swal;
+```
+
+Alerta para o Botão Excluir 
+
+Crie um arquivo com esse codigo e inclua no resources\js\app.js:
+```
+// Receber o seletor apagar e percorrer e lista de registro
+document.querySelectorAll('.btnDelete').forEach(function (button) {
+
+    // Aguardar o clique do usuário no botão apagar
+    button.addEventListener('click', function (event) {
+
+        // Bloquear o recarregamento da página
+        event.preventDefault();
+
+        // Receber o atributo que possui o id do registro que deve ser excluído
+        var deleteId = this.getAttribute('data-delete-id');
+
+        // SweetAlert
+        Swal.fire({
+            title: 'Tem certeza?',
+            text: 'Você não poderá reverter isso!',
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#0d6efd',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#dc3545',
+            confirmButtonText: 'Sim, excluir!',
+        }).then((result) => {
+
+            // Carregar a página responsável em excluír se o usuário confirmar a exclusão
+            if (result.isConfirmed) {
+                document.getElementById(`formExcluir${deleteId}`).submit();
+            }
+        });
+
+    });
+
+});
+```
+
+Na blade siga o exemplo
+```
+@can('destroy-cliente')
+    <form id="formExcluir{{ $cliente->id }}"
+        action="{{ route('clientes.destroy', ['cliente' => $cliente->id]) }}" method="POST">
+        @csrf
+        @method('delete')
+        <button type="button" class="btn btn-danger btn-sm me-1 mb-1 mb-md-0 btnDelete"
+            data-delete-id="{{ $cliente->id }}"><i class="fa-regular fa-trash-can"></i> Apagar</button>
+    </form>
+@endcan
+```
+
+Para o componente de alerta
+```
+{{-- Mensagem de Sucesso ao cadastrar no DB --}}
+@if (session()->has('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Swal.fire('Pronto!', "{{ session('success') }}", 'success');
+        })
+    </script>
+@endif
+
+{{-- Mensagem de Erro ao cadastrar no DB --}}
+@if (session()->has('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Swal.fire('Erro!', "{{ session('error') }}", 'error');
+        })
+    </script>
+@endif
+```
 
 ## Como usar o GitHub
 
@@ -410,6 +567,14 @@ Utilize o nome da model sempre do singular referente a tabela do banco de dados 
 ```
 php artisan make:model Course
 ```
+
+```
+php artisan make:model Cliente -mcrs
+```
+-m, --migration Create a new migration file for the model.
+-c, --controller Create a new controller for the model.
+-r, --resource Indicates if the generated controller should be a resource controller
+-s, --seed Create a new seeder for the model
 
 ## Criar uma Seed
 

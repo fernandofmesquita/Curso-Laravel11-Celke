@@ -9,3 +9,6 @@ import '@fortawesome/fontawesome-free/js/all';
 
 /* Importar o JS Admin Personalizado */
 import './scripts_admin';
+
+/* Importar sweetAlert do botão deletar */
+import './sweetalert_delete';

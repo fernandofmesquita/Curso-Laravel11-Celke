@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="small">
-                    Usuário: admin@admin.com<br>
+                    Usuário: superadmin@superadmin.com<br>
                     Senha: 123456
                 </div>
             </div>

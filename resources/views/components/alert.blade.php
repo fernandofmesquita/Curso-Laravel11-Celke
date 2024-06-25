@@ -1,15 +1,19 @@
 {{-- Mensagem de Sucesso ao cadastrar no DB --}}
-@if (session('success'))
-    <div class="alert alert-success" role="alert">
-        {{ session('success') }}
-    </div>
+@if (session()->has('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Swal.fire('Pronto!', "{{ session('success') }}", 'success');
+        })
+    </script>
 @endif
 
 {{-- Mensagem de Erro ao cadastrar no DB --}}
-@if (session('error'))
-    <div class="alert alert-danger" role="alert">
-        {{ session('error') }}
-    </div>
+@if (session()->has('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Swal.fire('Erro!', "{{ session('error') }}", 'error');
+        })
+    </script>
 @endif
 
 

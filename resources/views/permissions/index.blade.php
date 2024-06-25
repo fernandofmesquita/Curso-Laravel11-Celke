@@ -62,12 +62,12 @@
                                     @endcan                                    
 
                                     @can('destroy-permission')
-                                        <form action="{{ route('permission.destroy', ['permission' => $permission->id]) }}" method="POST">
+                                        <form id="formExcluir{{ $permission->id }}"
+                                            action="{{ route('permission.destroy', ['permission' => $permission->id]) }}" method="POST">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-danger btn-sm me-1"
-                                                onclick="return confirm('Tem certeza que deseja apagar este registro?')"><i
-                                                    class="fa-regular fa-trash-can"></i> Apagar</button>
+                                            <button type="button" class="btn btn-danger btn-sm me-1 mb-1 mb-md-0 btnDelete"
+                                                data-delete-id="{{ $permission->id }}"><i class="fa-regular fa-trash-can"></i> Apagar</button>
                                         </form>
                                     @endcan
                                 </td>

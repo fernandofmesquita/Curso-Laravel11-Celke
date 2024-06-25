@@ -57,10 +57,12 @@
                                                         
 
                             @can('destroy-role')
-                                <form action="{{ route('roles.destroy', ['role' => $role->id]) }}" method="POST">
+                                <form id="formExcluir{{ $role->id }}"
+                                    action="{{ route('roles.destroy', ['role' => $role->id]) }}" method="POST">
                                     @csrf
                                     @method('delete')
-                                    <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 mb-md-0" onclick="return confirm('Tem certeza que deseja EXCLUIR esse registro?')"><i class="fa-regular fa-trash-can"></i> Excluir</button>
+                                    <button type="button" class="btn btn-danger btn-sm me-1 mb-1 mb-md-0 btnDelete"
+                                        data-delete-id="{{ $role->id }}"><i class="fa-regular fa-trash-can"></i> Apagar</button>
                                 </form>
                             @endcan
                             
